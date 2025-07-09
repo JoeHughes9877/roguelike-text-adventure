@@ -3,6 +3,7 @@
 #include <string.h>
 
 char *get_string() {
+  printf("what do you do?");
   char *buffer = malloc(50);
   int current_length = 0;
 
