@@ -1,5 +1,7 @@
 # Text-Based RPG Engine in C
 
+currently unfinished.
+
 A dynamically generated text adventure game engine written in C with SQLite persistence.
 
 ## 🚀 Features
