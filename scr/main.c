@@ -40,6 +40,9 @@ void opening() {
 
   printf("---------------------------------------------------------------------"
          "----------\n");
+
+  printf("\nPress Enter to continue...");
+  getchar(); // Waits for the user to press Enter
 }
 
 void delay(int number_of_seconds) {
