@@ -1,7 +1,5 @@
 # Text-Based RPG Engine in C
 
-![RPG Game Screenshot](https://via.placeholder.com/800x400.png?text=Text+RPG+Screenshot)
-
 A dynamically generated text adventure game engine written in C with SQLite persistence.
 
 ## 🚀 Features
