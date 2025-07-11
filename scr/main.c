@@ -27,8 +27,9 @@ void opening() {
   printf("  Your head throbs from a blow you don’t remember receiving.\n");
   printf("  Then — a thunderous explosion shakes the ground.\n");
   printf("  Dust rains from the ceiling. Somewhere nearby, a wall has "
-         "collapsed.\n");
-  printf("  Screams echo down the corridor... and your cell door creaks "
+         "collapsed to your north.\n");
+  printf("  Screams echo down the corridor... and your cell door west of you "
+         "creaks "
          "open.\n\n");
   printf("  Freedom — unexpected and unearned — lies before you.\n");
 
