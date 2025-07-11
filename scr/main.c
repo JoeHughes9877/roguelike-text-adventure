@@ -1,17 +1,17 @@
 #include "header.h"
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
 void opening();
+void game_loop();
 void delay(int number_of_seconds);
 
 int main() {
   opening();
-  char *player_action = get_string();
 
-  generate_room();
+  game_loop();
 }
-
 void opening() {
   printf("====================================================================="
          "==========\n");
@@ -37,8 +37,8 @@ void opening() {
   getchar(); // Waits for the user to press Enter
 
   printf("\nThe threads of fate twist around you...");
-  printf("\nBut before your journey begins — tell me: who are you? ");
-  char *name = get_string();
+  char *name =
+      get_string("But before your journey begins — tell me: who are you? ");
 
   delay(3);
 
@@ -54,4 +54,23 @@ void delay(int number_of_seconds) {
   // looping till required time is not achieved
   while (clock() < start_time + CLOCKS_PER_SEC)
     ;
+}
+
+void game_loop() {
+  while (1) {
+    char *player_input = get_string("What do you do? ");
+
+    if (strstr(player_input, "go north") != NULL) {
+      generate_room();
+    }
+    if (strstr(player_input, "go east") != NULL) {
+      generate_room();
+    }
+    if (strstr(player_input, "go south") != NULL) {
+      generate_room();
+    }
+    if (strstr(player_input, "go west") != NULL) {
+      generate_room();
+    }
+  }
 }

@@ -2,9 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *get_string() {
+char *get_string(char *data) {
   char *buffer = malloc(50);
+
+  if (!buffer) {
+    return "failed to get string";
+  }
+
   int current_length = 0;
+
+  if (data) {
+    printf("%s", data);
+  }
 
   while (1) {
     fgets(buffer + current_length, 11, stdin);

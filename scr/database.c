@@ -33,9 +33,8 @@ struct CurrentRoom generate_room() {
   // room.possible_features = (char *)sqlite3_value_text(3);
   //  unimplemented feature as not sure how to handle it yet.
 
-  printf("%s\n", room.name_prefix);
-  printf("%s\n", room.name_core);
-  printf("%s\n", room.base_description);
+  printf("You find yourself in %s %s, %s\n", room.name_prefix, room.name_core,
+         room.base_description);
 
   return room;
 }

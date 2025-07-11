@@ -11,7 +11,7 @@ struct CurrentRoom {
 };
 
 // functions from get_inputs.c
-char *get_string();
+char *get_string(char *data);
 
 // database
 extern sqlite3 *db;
