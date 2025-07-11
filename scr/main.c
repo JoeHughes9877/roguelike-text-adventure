@@ -64,18 +64,16 @@ void game_loop() {
 
     if (strstr(player_input, "go north") != NULL) {
       generate_room();
-    }
-    if (strstr(player_input, "go east") != NULL) {
+    } else if (strstr(player_input, "go east") != NULL) {
       generate_room();
-    }
-    if (strstr(player_input, "go south") != NULL) {
+    } else if (strstr(player_input, "go south") != NULL) {
       generate_room();
-    }
-    if (strstr(player_input, "go west") != NULL) {
+    } else if (strstr(player_input, "go west") != NULL) {
       generate_room();
-    }
-    if (strstr(player_input, "look") != NULL) {
+    } else if (strstr(player_input, "look") != NULL) {
       look_around_room();
+    } else {
+      printf("Even the gods seem puzzled by that request.\n");
     }
   }
 }
