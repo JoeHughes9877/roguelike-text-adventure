@@ -8,6 +8,7 @@ void game_loop();
 void delay(int number_of_seconds);
 
 int main() {
+  set_start_room();
   opening();
 
   game_loop();
@@ -71,6 +72,9 @@ void game_loop() {
     }
     if (strstr(player_input, "go west") != NULL) {
       generate_room();
+    }
+    if (strstr(player_input, "look") != NULL) {
+      look_around_room();
     }
   }
 }

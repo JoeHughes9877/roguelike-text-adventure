@@ -18,5 +18,7 @@ extern sqlite3 *db;
 
 // Functions from database handling
 struct CurrentRoom generate_room();
+void look_around_room();
+void set_start_room();
 
 #endif
