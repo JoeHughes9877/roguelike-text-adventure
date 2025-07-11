@@ -54,7 +54,7 @@ INSERT INTO room_templates (name_prefix, name_core, base_description, possible_f
 ('Damp', 'Prison Cell', 'A small, dark cell with cold stone walls dampened by moisture seeping through the cracks. Rusty iron bars block the only exit.', 'moss patches,dripping water,rusted chains'),
 ('Collapsed', 'Sewers', 'Narrow tunnels filled with stagnant water and scattered debris. The stench of waste is overpowering.', 'rat droppings,broken pipes,echoing drips'),
 ('Echoing', 'Underground Cavern', 'A vast cavern beneath the city, lit faintly by glowing fungi clinging to the rocky walls.', 'glowing mushrooms,stalactites,underground stream'),
-('Forgotten', 'Smuggler\'s Hideout', 'A hidden room cluttered with crates, barrels, and makeshift beds — a remnant of illicit deals.', 'rusty locks,old maps,barrels of supplies'),
+('Forgotten', 'Smuggler''s Hideout', 'A hidden room cluttered with crates, barrels, and makeshift beds — a remnant of illicit deals.', 'rusty locks,old maps,barrels of supplies'),
 ('Silent', 'Ancient Catacombs', 'Long-forgotten burial chambers lined with weathered sarcophagi and faded murals.', 'dusty bones,faded runes,cobwebbed corners');
 
 -- Insert items
@@ -63,7 +63,7 @@ INSERT INTO item_definitions (name, description, type, value) VALUES
 ('Cracked Healing Potion', 'A potion that restores a small amount of health, though some of it may have leaked.', 'consumable', 10),
 ('Dagger of Shadows', 'A slender blade that seems to absorb light.', 'weapon', 75),
 ('Torch', 'A wooden torch to light the dark tunnels.', 'utility', 5),
-('Smuggler\'s Pouch', 'A small pouch containing a few gold coins and odd trinkets.', 'misc', 30),
+('Smuggler''s Pouch', 'A small pouch containing a few gold coins and odd trinkets.', 'misc', 30),
 ('Ancient Coin', 'A tarnished coin bearing the Imperial City crest, centuries old.', 'quest', 0);
 
 -- Insert enemies
@@ -81,7 +81,7 @@ INSERT INTO room_template_items (template_id, item_def_id) VALUES
 (2, 2),  -- Cracked Healing Potion in Collapsed Sewers
 (3, 6),  -- Ancient Coin in Echoing Underground Cavern
 (4, 5),  -- Smuggler's Pouch in Forgotten Smuggler's Hideout
-(4, 4);  -- Torch in Forgotten Smuggler's Hideout
+(4, 4),  -- Torch in Forgotten Smuggler's Hideout
 (5, 6);  -- Ancient Coin in Silent Ancient Catacombs
 
 -- Link enemies to rooms
@@ -91,4 +91,3 @@ INSERT INTO room_template_enemies (template_id, enemy_def_id) VALUES
 (2, 2),  -- Cave Spider in Collapsed Sewers
 (3, 5),  -- Ancient Skeleton in Echoing Underground Cavern
 (4, 4),  -- Smuggler in Forgotten Smuggler's Hideout
-(5, 5);  -- Ancient Skeleton in Silent Ancient Catacombs

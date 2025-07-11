@@ -3,12 +3,20 @@
 
 #include <sqlite3.h>
 
-// get_inputs.c
+struct CurrentRoom {
+  char *name_prefix;
+  char *name_core;
+  char *base_description;
+  char *features;
+};
+
+// functions from get_inputs.c
 char *get_string();
 
 // database
 extern sqlite3 *db;
 
-// Functions for database handling
+// Functions from database handling
+struct CurrentRoom generate_room();
 
 #endif

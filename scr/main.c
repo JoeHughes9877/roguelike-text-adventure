@@ -7,16 +7,9 @@ void delay(int number_of_seconds);
 
 int main() {
   opening();
+  char *player_action = get_string();
 
-  printf("\nThe threads of fate twist around you...");
-  printf("\nBut before your journey begins — tell me: who are you? ");
-  char *name = get_string();
-
-  delay(3);
-
-  printf("With the taste of freedom fresh on your lips, what path will you "
-         "take? ");
-  get_string();
+  generate_room();
 }
 
 void opening() {
@@ -40,9 +33,17 @@ void opening() {
 
   printf("---------------------------------------------------------------------"
          "----------\n");
-
   printf("\nPress Enter to continue...");
   getchar(); // Waits for the user to press Enter
+
+  printf("\nThe threads of fate twist around you...");
+  printf("\nBut before your journey begins — tell me: who are you? ");
+  char *name = get_string();
+
+  delay(3);
+
+  printf("With the taste of freedom fresh on your lips, what path will you "
+         "take? ");
 }
 
 void delay(int number_of_seconds) {
