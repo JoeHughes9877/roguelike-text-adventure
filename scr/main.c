@@ -48,16 +48,6 @@ void opening() {
          "take? ");
 }
 
-void delay(int number_of_seconds) {
-  int milli_seconds = 1000 * number_of_seconds;
-
-  clock_t start_time = clock();
-
-  // looping till required time is not achieved
-  while (clock() < start_time + CLOCKS_PER_SEC)
-    ;
-}
-
 void game_loop() {
   while (1) {
     char *player_input = get_string("What do you do? ");
@@ -76,4 +66,14 @@ void game_loop() {
       printf("Even the gods seem puzzled by that request.\n");
     }
   }
+}
+
+void delay(int number_of_seconds) {
+  int milli_seconds = 1000 * number_of_seconds;
+
+  clock_t start_time = clock();
+
+  // looping till required time is not achieved
+  while (clock() < start_time + CLOCKS_PER_SEC)
+    ;
 }

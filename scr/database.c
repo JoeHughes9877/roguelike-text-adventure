@@ -2,16 +2,16 @@
 #include <sqlite3.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct CurrentRoom room;
+struct CurrentItemsInRoom items;
 
-struct CurrentRoom generate_room() {
+void generate_room() {
 
-  // opens database
-  sqlite3 *DB;
-  int exit = 0;
-  exit = sqlite3_open("data/database.db", &DB);
-  char *errmsg = "database connection failed.";
+  sqlite3 *DB = NULL;
+  open_database(&DB);
 
   // query to select a row at random
   char *sql = "SELECT name_prefix, name_core, "
@@ -31,25 +31,19 @@ struct CurrentRoom generate_room() {
   room.name_core = (char *)sqlite3_column_text(stmt, 1);
   room.base_description = (char *)sqlite3_column_text(stmt, 2);
 
-  // room.possible_features = (char *)sqlite3_value_text(3);
-  //  unimplemented feature as not sure how to handle it yet.
-
   printf("You find yourself in %s %s, %s\n", room.name_prefix, room.name_core,
          room.base_description);
 
-  return room;
+  sqlite3_close(DB);
 }
 
 void look_around_room() {
+  int value = items_in_room();
 
-  // if the rooms name is Null then i assume that the entire struct is also Null
-  // so i need to generate a new room
-  if (room.name_core == NULL) {
-    generate_room();
+  for (int i = 0; i < value; i++) {
+    printf("You look around the room and spot %s.\nIt appears to be %s\n",
+           items.name[i], items.description[i]);
   }
-
-  printf("You find yourself in %s %s, %s\n", room.name_prefix, room.name_core,
-         room.base_description);
 }
 
 void set_start_room() {
@@ -59,4 +53,63 @@ void set_start_room() {
       "Cold stone walls and rusty iron bars surround your cell. A "
       "flickering torch casts shadows over a straw-strewn cot. One wall feels "
       "oddly worn, as if it hides more than just years of neglect.";
+}
+
+int items_in_room() {
+  // randomly generate the amont of items in a room
+  int min_items = 0;
+  int max_items = 4;
+
+  // +1 makes it ensures it works within the range
+  int amount_of_items = rand() % (max_items - min_items + 1);
+
+  if (amount_of_items == 0) {
+    printf("You see nothing of value.");
+    return 0;
+  }
+
+  // gets the items from the DB
+  sqlite3 *DB = NULL;
+  open_database(&DB);
+
+  char *sql = "SELECT name, description, type FROM item_definitions "
+              "ORDER BY RANDOM() "
+              "LIMIT ?";
+
+  sqlite3_stmt *stmt;
+
+  sqlite3_prepare_v2(
+      DB, sql, -1, &stmt,
+      NULL); // -1 allows it to automatically determin length of script
+
+  sqlite3_bind_int(stmt, 1, amount_of_items);
+
+  for (int i = 0; i < amount_of_items; i++) {
+    sqlite3_step(stmt);
+    const unsigned char *item_name = sqlite3_column_text(stmt, 0);
+    const unsigned char *item_description = sqlite3_column_text(stmt, 1);
+    const unsigned char *item_type = sqlite3_column_text(stmt, 2);
+
+    memcpy(&items.name[i], item_name, sizeof(items.name[i]));
+
+    memcpy(&items.description[i], item_description,
+           sizeof(items.description[i]));
+
+    memcpy(&items.type[i], item_type, sizeof(items.type[i]));
+  }
+
+  sqlite3_finalize(stmt);
+  sqlite3_close(DB);
+  return amount_of_items;
+}
+int open_database(sqlite3 **DB) {
+  int exit = sqlite3_open("data/database.db", DB);
+  char *errmsg = "database connection failed.";
+
+  if (exit == 0) {
+    return 0;
+  } else {
+    printf("%s", errmsg);
+    return 1;
+  }
 }
