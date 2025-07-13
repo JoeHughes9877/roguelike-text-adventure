@@ -8,6 +8,8 @@
 struct CurrentRoom room;
 struct CurrentItemsInRoom items;
 
+int num_items_in_room;
+
 void generate_room() {
 
   sqlite3 *DB = NULL;
@@ -35,12 +37,16 @@ void generate_room() {
          room.base_description);
 
   sqlite3_close(DB);
+
+  generate_items_in_room();
 }
 
 void look_around_room() {
-  int value = items_in_room();
+  if (num_items_in_room == 0) {
+    printf("you see nothing of value.\n");
+  }
 
-  for (int i = 0; i < value; i++) {
+  for (int i = 0; i < num_items_in_room; i++) {
     printf("You look around the room and spot %s.\nIt appears to be %s\n",
            items.name[i], items.description[i]);
   }
@@ -53,20 +59,17 @@ void set_start_room() {
       "Cold stone walls and rusty iron bars surround your cell. A "
       "flickering torch casts shadows over a straw-strewn cot. One wall feels "
       "oddly worn, as if it hides more than just years of neglect.";
+
+  num_items_in_room = 0;
 }
 
-int items_in_room() {
+void generate_items_in_room() {
   // randomly generate the amont of items in a room
   int min_items = 0;
   int max_items = 4;
 
   // +1 makes it ensures it works within the range
-  int amount_of_items = rand() % (max_items - min_items + 1);
-
-  if (amount_of_items == 0) {
-    printf("You see nothing of value.");
-    return 0;
-  }
+  num_items_in_room = rand() % (max_items - min_items + 1);
 
   // gets the items from the DB
   sqlite3 *DB = NULL;
@@ -82,9 +85,9 @@ int items_in_room() {
       DB, sql, -1, &stmt,
       NULL); // -1 allows it to automatically determin length of script
 
-  sqlite3_bind_int(stmt, 1, amount_of_items);
+  sqlite3_bind_int(stmt, 1, num_items_in_room);
 
-  for (int i = 0; i < amount_of_items; i++) {
+  for (int i = 0; i < num_items_in_room; i++) {
     sqlite3_step(stmt);
     const unsigned char *item_name = sqlite3_column_text(stmt, 0);
     const unsigned char *item_description = sqlite3_column_text(stmt, 1);
@@ -100,7 +103,6 @@ int items_in_room() {
 
   sqlite3_finalize(stmt);
   sqlite3_close(DB);
-  return amount_of_items;
 }
 int open_database(sqlite3 **DB) {
   int exit = sqlite3_open("data/database.db", DB);
