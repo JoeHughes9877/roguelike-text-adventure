@@ -11,9 +11,9 @@ struct CurrentRoom {
 };
 
 struct CurrentItemsInRoom {
-  char name[4];
-  char description[4];
-  char type[4];
+  char name[4][32];
+  char description[4][256];
+  char type[4][32];
 };
 
 // functions from get_inputs.c
@@ -26,7 +26,7 @@ extern sqlite3 *db;
 void generate_room();
 void look_around_room();
 void set_start_room();
-int items_in_room();
+void generate_items_in_room();
 int open_database(sqlite3 **DB);
 
 #endif
