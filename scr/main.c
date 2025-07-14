@@ -1,4 +1,5 @@
 #include "header.h"
+#include "inventory.c"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -60,8 +61,10 @@ void game_loop() {
       generate_room();
     } else if (strstr(player_input, "go west") != NULL) {
       generate_room();
-    } else if (strstr(player_input, "look") != NULL) {
+    } else if (strstr(player_input, "look around") != NULL) {
       look_around_room();
+    } else if (strstr(player_input, "inventory") != NULL) {
+      print_inventory();
     } else {
       printf("Even the gods seem puzzled by that request.\n");
     }
