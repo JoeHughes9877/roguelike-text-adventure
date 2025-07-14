@@ -17,6 +17,9 @@ struct CurrentItemsInRoom {
   int num_items_in_room;
 };
 
+extern struct CurrentRoom room;
+extern struct CurrentItemsInRoom items;
+
 // functions from get_inputs.c
 char *get_string(char *data);
 
