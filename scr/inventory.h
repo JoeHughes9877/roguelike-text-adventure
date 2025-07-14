@@ -7,6 +7,5 @@ void add_to_inventory(char *input);
 void print_inventory();
 void check_if_in_inventory();
 void remove_item();
-char *find_item_in_text(char *input);
 
 #endif
