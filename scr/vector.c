@@ -1,12 +1,8 @@
+#include "vector.h"
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-struct vector {
-  int size;
-  int capacity;
-  char *elements[];
-};
 
 void free_vector(struct vector *vec);
 
@@ -59,4 +55,10 @@ void free_vector(struct vector *vec) {
     free(vec->elements[i]);
   }
   free(vec);
+}
+
+void print_vector(struct vector *vec) {
+  for (int i = 0; i < vec->size; i++) {
+    printf("%s\n", vec->elements[i]);
+  }
 }
