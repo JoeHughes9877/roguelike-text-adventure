@@ -35,7 +35,8 @@ char *find_item_in_text(char *players_input) {
     char *token = strtok(players_input, " ");
 
     if (strcmp(token, "take")) {
-      char *token = strtok(NULL, " ");
+      char *token =
+          strtok(NULL, " "); // Null allows it to carry on from the previous
       printf("%s", token);
       return token;
     }
