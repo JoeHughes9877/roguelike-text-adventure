@@ -23,16 +23,21 @@ void print_inventory() {
 }
 
 void add_to_inventory(char *players_input) {
+  if (items_in_inventory == 8) {
+    printf("Your pockets are fuller than a M'aiq’s tales — no room left.\n");
+    return;
+  }
+
   while (1) {
     for (int i = 0; i < items.num_items_in_room; i++) {
       if (strstr(players_input, items.name[i])) {
         inventory[items_in_inventory] = items.name[i];
-        printf("item added to inventory");
+        printf("You carefully stow the %s into your pack.\n", items.name[i]);
         items_in_inventory += 1;
         return;
       }
     }
-    printf("i cant put it in.");
+    printf("Hah! As if that’d fit — maybe ask a Mudcrab for advice?\n");
     return;
   }
 }
