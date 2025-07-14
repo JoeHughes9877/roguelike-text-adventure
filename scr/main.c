@@ -1,5 +1,5 @@
 #include "header.h"
-#include "inventory.c"
+#include "inventory.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
@@ -12,14 +12,16 @@ void delay(int number_of_seconds);
 char *lower_player_input(char *input);
 
 int main() {
+  inventory = init_inventory();
   set_start_room();
   opening();
 
   game_loop();
 }
 void opening() {
-  printf("====================================================================="
-         "==========\n");
+  printf(
+      "=======a=============================================================="
+      "==========\n");
   printf("                        The Elder Scrolls: Shadows of Tamriel\n");
   printf("====================================================================="
          "==========\n\n");
@@ -45,8 +47,6 @@ void opening() {
   printf("\nThe threads of fate twist around you...");
   char *name =
       get_string("But before your journey begins — tell me: who are you? ");
-
-  delay(3);
 
   printf("With the taste of freedom fresh on your lips, what path will you "
          "take? ");
@@ -78,16 +78,6 @@ void game_loop() {
       printf("Even the gods seem puzzled by that request.\n");
     }
   }
-}
-
-void delay(int number_of_seconds) {
-  int milli_seconds = 1000 * number_of_seconds;
-
-  clock_t start_time = clock();
-
-  // looping till required time is not achieved
-  while (clock() < start_time + CLOCKS_PER_SEC)
-    ;
 }
 
 char *lower_player_input(char *input) {
