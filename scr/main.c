@@ -65,6 +65,10 @@ void game_loop() {
       look_around_room();
     } else if (strstr(player_input, "inventory") != NULL) {
       print_inventory();
+    } else if (strstr(player_input, "take") != NULL) {
+      add_to_inventory(player_input);
+    } else if (strstr(player_input, "drop") != NULL) {
+      remove_item();
     } else {
       printf("Even the gods seem puzzled by that request.\n");
     }
