@@ -14,6 +14,7 @@ struct CurrentItemsInRoom {
   char name[4][32];
   char description[4][256];
   char type[4][32];
+  int num_items_in_room;
 };
 
 // functions from get_inputs.c
