@@ -38,7 +38,7 @@ make
 | Command         | Description                   |
 |-----------------|-------------------------------|
 | `go [direction]`| Move (north/south/east/west)  |
-| `look`          | Examine current room          |
+| `look around`   | Examine current room          |
 | `take [item]`   | Pick up an item               |
 | `use [item]`    | Use an item from inventory    |
 | `attack`        | Fight nearby enemies          |
