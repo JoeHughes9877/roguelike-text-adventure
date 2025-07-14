@@ -1,5 +1,6 @@
 #include "header.h"
 #include "inventory.c"
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -7,6 +8,8 @@
 void opening();
 void game_loop();
 void delay(int number_of_seconds);
+
+char *lower_player_input(char *input);
 
 int main() {
   set_start_room();
@@ -53,6 +56,8 @@ void game_loop() {
   while (1) {
     char *player_input = get_string("What do you do? ");
 
+    player_input = lower_player_input(player_input);
+
     if (strstr(player_input, "go north") != NULL) {
       generate_room();
     } else if (strstr(player_input, "go east") != NULL) {
@@ -83,4 +88,12 @@ void delay(int number_of_seconds) {
   // looping till required time is not achieved
   while (clock() < start_time + CLOCKS_PER_SEC)
     ;
+}
+
+char *lower_player_input(char *input) {
+  int input_len = strlen(input);
+  for (int i = 0; i < input_len; i++) {
+    input[i] = tolower(input[i]);
+  }
+  return input;
 }
