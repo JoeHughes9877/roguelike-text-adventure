@@ -1,10 +1,10 @@
 #include "inventory.h"
+#include "header.h"
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
 
 char *inventory[8];
-int items_in_inventory = 3;
+int items_in_inventory = 0;
 
 void print_inventory() {
   if (items_in_inventory == 0) {
@@ -23,25 +23,20 @@ void print_inventory() {
 }
 
 void add_to_inventory(char *players_input) {
-  players_input = find_item_in_text(players_input);
+  while (1) {
+    for (int i = 0; i < items.num_items_in_room; i++) {
+      if (strstr(players_input, items.name[i])) {
+        inventory[items_in_inventory] = items.name[i];
+        printf("item added to inventory");
+        items_in_inventory += 1;
+        return;
+      }
+    }
+    printf("i cant put it in.");
+    return;
+  }
 }
 
 void check_if_in_inventory() {}
 
 void remove_item() {}
-
-char *find_item_in_text(char *players_input) {
-  while (1) {
-    char *token = strtok(players_input, " ");
-
-    if (strcmp(token, "take")) {
-      char *token =
-          strtok(NULL, " "); // Null allows it to carry on from the previous
-      printf("%s", token);
-      return token;
-    }
-    if (token == NULL) {
-      return ("cannot find item.");
-    }
-  }
-}
