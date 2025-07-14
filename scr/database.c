@@ -8,8 +8,6 @@
 struct CurrentRoom room;
 struct CurrentItemsInRoom items;
 
-int num_items_in_room;
-
 void generate_room() {
 
   sqlite3 *DB = NULL;
@@ -42,11 +40,11 @@ void generate_room() {
 }
 
 void look_around_room() {
-  if (num_items_in_room == 0) {
+  if (items.num_items_in_room == 0) {
     printf("you see nothing of value.\n");
   }
 
-  for (int i = 0; i < num_items_in_room; i++) {
+  for (int i = 0; i < items.num_items_in_room; i++) {
     printf("You look around the room and spot %s.\nIt appears to be %s\n",
            items.name[i], items.description[i]);
   }
@@ -60,7 +58,7 @@ void set_start_room() {
       "flickering torch casts shadows over a straw-strewn cot. One wall feels "
       "oddly worn, as if it hides more than just years of neglect.";
 
-  num_items_in_room = 0;
+  items.num_items_in_room = 0;
 }
 
 void generate_items_in_room() {
@@ -69,7 +67,7 @@ void generate_items_in_room() {
   int max_items = 4;
 
   // +1 makes it ensures it works within the range
-  num_items_in_room = rand() % (max_items - min_items + 1);
+  items.num_items_in_room = rand() % (max_items - min_items + 1);
 
   // gets the items from the DB
   sqlite3 *DB = NULL;
@@ -85,9 +83,9 @@ void generate_items_in_room() {
       DB, sql, -1, &stmt,
       NULL); // -1 allows it to automatically determin length of script
 
-  sqlite3_bind_int(stmt, 1, num_items_in_room);
+  sqlite3_bind_int(stmt, 1, items.num_items_in_room);
 
-  for (int i = 0; i < num_items_in_room; i++) {
+  for (int i = 0; i < items.num_items_in_room; i++) {
     sqlite3_step(stmt);
     const unsigned char *item_name = sqlite3_column_text(stmt, 0);
     const unsigned char *item_description = sqlite3_column_text(stmt, 1);
