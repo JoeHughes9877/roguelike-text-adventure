@@ -1,4 +1,5 @@
-#include "header.h"
+#include "database.h"
+#include "vector.h"
 #include <sqlite3.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -7,6 +8,8 @@
 
 struct CurrentRoom room;
 struct CurrentItemsInRoom items;
+
+int const MAX_ITEMS_IN_ROOM = 4;
 
 void generate_room() {
 
@@ -46,7 +49,7 @@ void look_around_room() {
 
   for (int i = 0; i < items.num_items_in_room; i++) {
     printf("You look around the room and spot %s.\nIt appears to be %s\n",
-           items.name[i], items.description[i]);
+           items.name->elements[i], items.description->elements[i]);
   }
 }
 
@@ -91,17 +94,15 @@ void generate_items_in_room() {
     const unsigned char *item_description = sqlite3_column_text(stmt, 1);
     const unsigned char *item_type = sqlite3_column_text(stmt, 2);
 
-    memcpy(&items.name[i], item_name, sizeof(items.name[i]));
-
-    memcpy(&items.description[i], item_description,
-           sizeof(items.description[i]));
-
-    memcpy(&items.type[i], item_type, sizeof(items.type[i]));
+    items.name->elements[i] = strdup((const char *)item_name);
+    items.description->elements[i] = strdup((const char *)item_description);
+    items.type->elements[i] = strdup((const char *)item_type);
   }
 
   sqlite3_finalize(stmt);
   sqlite3_close(DB);
 }
+
 int open_database(sqlite3 **DB) {
   int exit = sqlite3_open("data/database.db", DB);
   char *errmsg = "database connection failed.";
@@ -112,4 +113,14 @@ int open_database(sqlite3 **DB) {
     printf("%s", errmsg);
     return 1;
   }
+}
+
+struct vector *init_items() {
+  struct vector *items =
+      malloc(sizeof(struct vector) + MAX_ITEMS_IN_ROOM * sizeof(char *));
+
+  items->size = 0;
+  items->capacity = MAX_ITEMS_IN_ROOM;
+
+  return items;
 }
