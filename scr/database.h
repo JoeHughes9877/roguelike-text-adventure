@@ -1,5 +1,5 @@
-#ifndef HEADER_H
-#define HEADER_H
+#ifndef DATABASE_H
+#define DATABASE_H
 
 #include "vector.h"
 #include <sqlite3.h>
@@ -29,8 +29,6 @@ extern sqlite3 *db;
 
 // Functions from database handling
 void generate_room();
-void look_around_room();
-void set_start_room();
 void generate_items_in_room();
 int open_database(sqlite3 **DB);
 

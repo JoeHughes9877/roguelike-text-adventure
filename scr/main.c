@@ -1,5 +1,6 @@
 #include "database.h"
 #include "inventory.h"
+#include "room.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
