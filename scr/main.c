@@ -1,4 +1,4 @@
-#include "header.h"
+#include "database.h"
 #include "inventory.h"
 #include <ctype.h>
 #include <stdio.h>
@@ -13,6 +13,10 @@ char *lower_player_input(char *input);
 
 int main() {
   inventory = init_inventory();
+  items.name = init_items();
+  items.description = init_items();
+  items.type = init_items();
+
   set_start_room();
   opening();
 
