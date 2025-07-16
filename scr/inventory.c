@@ -27,7 +27,7 @@ void print_inventory() {
 
 void add_to_inventory(char *players_input) {
   if (!inventory) {
-    init_inventory();
+    inventory = init_inventory();
   }
 
   if (inventory->size == inventory->capacity) {
@@ -42,14 +42,34 @@ void add_to_inventory(char *players_input) {
       printf("You carefully stow the %s into your pack.\n",
              items.name->elements[i]);
       inventory->size++;
+      printf("%d\n", inventory->size);
       return;
     }
   }
 }
 
-void check_if_in_inventory() {}
+void remove_item(char *players_input) {
+  if (!inventory) {
+    inventory = init_inventory();
+  }
 
-void remove_item() {}
+  // if empty
+  if (inventory->size == 0) {
+    printf(
+        "Even Sheogorath couldn’t conjure an item from *this* sorry state.\n");
+    return;
+  }
+  for (int i = 0; i < items.num_items_in_room; i++) {
+    if (strstr(players_input, items.name->elements[i]) != NULL) {
+      printf("You cast away '%s', hopeful it will one day find purpose in "
+             "another’s hands.\n",
+             items.name->elements[i]);
+      delete_by_value(inventory, items.name->elements[i]);
+      printf("%d\n", inventory->size);
+      return;
+    }
+  }
+}
 
 struct vector *init_inventory() {
   struct vector *inventory =
