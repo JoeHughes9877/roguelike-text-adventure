@@ -78,7 +78,7 @@ void game_loop() {
     } else if (strstr(player_input, "take") != NULL) {
       add_to_inventory(player_input);
     } else if (strstr(player_input, "drop") != NULL) {
-      remove_item();
+      remove_item(player_input);
     } else {
       printf("Even the gods seem puzzled by that request.\n");
     }
