@@ -6,26 +6,16 @@
 
 void free_vector(struct vector *vec);
 
-void delete_by_value(int new_size, struct vector *vec, char *target_value) {
-  int current_max_index = vec->size - 1;
-
-  char **temp_storage = malloc(new_size * sizeof(char *));
-
-  for (int index = 0; index < new_size; index++) {
-    if (strcmp(vec->elements[index], target_value) != 0) {
-      continue;
-    } else {
-      memcpy(&vec[index], &temp_storage[index], sizeof(int));
+void delete_by_value(struct vector *vec, char *target_value) {
+  for (int i = 0; index < vec->size; i++) {
+    if (strcmp(vec->elements[i], target_value) == 0) {
+      for (int j = i; j < vec->size - 1; j++) {
+        vec->elements[j] = vec->elements[j + 1];
+      }
+      vec->size--;
+      break;
     }
   }
-
-  vec->capacity = new_size;
-
-  if (current_max_index > new_size) {
-    current_max_index = new_size;
-  }
-
-  free_vector(vec);
 }
 
 void resize(int new_size, struct vector *vec) {
