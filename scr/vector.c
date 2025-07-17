@@ -5,10 +5,11 @@
 #include <string.h>
 
 void free_vector(struct vector *vec);
+void resize(int newSize, struct vector *vec);
 
 void delete_by_value(struct vector *vec, char *target_value) {
-  for (int i = 0; index < vec->size; i++) {
-    if (strcmp(vec->elements[i], target_value) == 0) {
+  for (int i = 0; i < vec->size; i++) {
+    if (strstr(vec->elements[i], target_value) != NULL) {
       for (int j = i; j < vec->size - 1; j++) {
         vec->elements[j] = vec->elements[j + 1];
       }
@@ -18,22 +19,28 @@ void delete_by_value(struct vector *vec, char *target_value) {
   }
 }
 
-void resize(int new_size, struct vector *vec) {
-  int current_max_index = vec->size - 1;
+void resize(int newSize, struct vector *vec) {
+  int vectorSize = vec->size - 1;
 
-  char **temp_storage = malloc(new_size * sizeof(char *));
+  char **temp = malloc((newSize) * sizeof(int));
 
-  for (int index = 0; index < new_size; index++) {
-    memcpy(&vec[index], &temp_storage[index], sizeof(int));
+  for (int i = 0; i < newSize; i++) {
+    memcpy(temp[i], &vec->elements[i], sizeof(int));
+  }
+  vec->capacity = newSize;
+
+  for (int i = 0; i < vec->size; i++) {
+    free(vec->elements[i]);
   }
 
-  vec->capacity = new_size;
+  free(vec->elements);
 
-  if (current_max_index > new_size) {
-    current_max_index = new_size;
+  vec->elements = temp;
+  vec->capacity = newSize;
+
+  if (vec->size > newSize) {
+    vec->size = newSize;
   }
-
-  free_vector(vec);
 }
 
 void free_vector(struct vector *vec) {
@@ -51,4 +58,13 @@ void print_vector(struct vector *vec) {
   for (int i = 0; i < vec->size; i++) {
     printf("%s\n", vec->elements[i]);
   }
+}
+
+void delete_by_index(struct vector *vec, int index) {
+
+  free(vec->elements[index]);
+  for (int j = index; j < vec->size - 1; j++) {
+    vec->elements[j] = vec->elements[j + 1];
+  }
+  vec->size--;
 }

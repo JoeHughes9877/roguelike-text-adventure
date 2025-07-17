@@ -1,6 +1,7 @@
 #include "database.h"
 #include "vector.h"
 #include <stdio.h>
+#include <string.h>
 
 void look_around_room() {
   if (items.num_items_in_room == 0) {
@@ -22,4 +23,15 @@ void set_start_room() {
       "oddly worn, as if it hides more than just years of neglect.";
 
   items.num_items_in_room = 0;
+}
+
+void remove_item_from_room(char *item) {
+  for (int i = 0; i < items.num_items_in_room; i++) {
+    if (strcmp(items.name->elements[i], item) == 0) {
+      delete_by_index(items.name, i);
+      delete_by_index(items.description, i);
+      delete_by_index(items.type, i);
+      return;
+    }
+  }
 }

@@ -29,7 +29,6 @@ void generate_room() {
       NULL); // -1 allows it to automatically determin length of script
 
   sqlite3_step(stmt);
-
   room.name_prefix = (char *)sqlite3_column_text(stmt, 0);
   room.name_core = (char *)sqlite3_column_text(stmt, 1);
   room.base_description = (char *)sqlite3_column_text(stmt, 2);
@@ -59,7 +58,6 @@ void generate_items_in_room() {
               "LIMIT ?";
 
   sqlite3_stmt *stmt;
-
   sqlite3_prepare_v2(
       DB, sql, -1, &stmt,
       NULL); // -1 allows it to automatically determin length of script
@@ -68,6 +66,7 @@ void generate_items_in_room() {
 
   for (int i = 0; i < items.num_items_in_room; i++) {
     sqlite3_step(stmt);
+
     const unsigned char *item_name = sqlite3_column_text(stmt, 0);
     const unsigned char *item_description = sqlite3_column_text(stmt, 1);
     const unsigned char *item_type = sqlite3_column_text(stmt, 2);
@@ -99,6 +98,6 @@ struct vector *init_items() {
 
   items->size = 0;
   items->capacity = MAX_ITEMS_IN_ROOM;
-
+  items->elements = malloc(MAX_ITEMS_IN_ROOM * sizeof(char *));
   return items;
 }
