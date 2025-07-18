@@ -93,11 +93,12 @@ int open_database(sqlite3 **DB) {
 }
 
 struct vector *init_items() {
-  struct vector *items =
+  struct vector *items_in_room =
       malloc(sizeof(struct vector) + MAX_ITEMS_IN_ROOM * sizeof(char *));
 
-  items->size = 0;
-  items->capacity = MAX_ITEMS_IN_ROOM;
-  items->elements = malloc(MAX_ITEMS_IN_ROOM * sizeof(char *));
-  return items;
+  items_in_room->size = 0;
+  items_in_room->capacity = MAX_ITEMS_IN_ROOM;
+  items_in_room->elements = malloc(MAX_ITEMS_IN_ROOM * sizeof(char *));
+  items.num_items_in_room = 0;
+  return items_in_room;
 }
