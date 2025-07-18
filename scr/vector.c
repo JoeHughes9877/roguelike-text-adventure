@@ -17,22 +17,24 @@ void delete_by_value(struct vector *vec, char *target_value) {
       break;
     }
   }
+  free_vector(vec);
 }
 
 void resize(int newSize, struct vector *vec) {
-  int vectorSize = vec->size - 1;
+  char **temp = malloc((newSize) * sizeof(char *));
 
-  char **temp = malloc((newSize) * sizeof(int));
-
-  for (int i = 0; i < newSize; i++) {
-    memcpy(temp[i], &vec->elements[i], sizeof(int));
+  if(!temp) {
+    printf("malloc failed. ");
+    return;
   }
-  vec->capacity = newSize;
 
+  for (int i = 0; i < vec->size; i++) {
+    temp[i] = vec->elements[i];
+  } 
+  
   for (int i = 0; i < vec->size; i++) {
     free(vec->elements[i]);
   }
-
   free(vec->elements);
 
   vec->elements = temp;
@@ -68,3 +70,4 @@ void delete_by_index(struct vector *vec, int index) {
   }
   vec->size--;
 }
+
