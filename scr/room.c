@@ -31,6 +31,7 @@ void remove_item_from_room(char *item) {
       delete_by_index(items.name, i);
       delete_by_index(items.description, i);
       delete_by_index(items.type, i);
+
       return;
     }
   }
