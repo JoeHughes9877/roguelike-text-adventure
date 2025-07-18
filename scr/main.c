@@ -54,7 +54,7 @@ void opening() {
       get_string("But before your journey begins — tell me: who are you? ");
 
   printf("With the taste of freedom fresh on your lips, what path will you "
-         "take? ");
+         "take? %s", name);
 }
 
 void game_loop() {
