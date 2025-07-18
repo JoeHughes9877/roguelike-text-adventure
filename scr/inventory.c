@@ -27,9 +27,6 @@ void print_inventory() {
 }
 
 void add_to_inventory(char *players_input) {
-  if (!inventory) {
-    inventory = init_inventory();
-  }
   if (inventory->size == inventory->capacity) {
     printf("Hah! As if that’d fit — maybe ask a Mudcrab for advice?\n");
     return;
@@ -40,10 +37,9 @@ void add_to_inventory(char *players_input) {
 
       printf("You carefully stow the %s into your pack.\n",
              items.name->elements[i]);
-
-      items.num_items_in_room--;
-      inventory->size++;
       remove_item_from_room(items.name->elements[i]);
+
+      inventory->size++;
       return;
     }
   }
@@ -65,7 +61,6 @@ void remove_item(char *players_input) {
       printf("You cast away '%s', hopeful it will one day find purpose in "
              "another’s hands.\n",
              inventory->elements[i]);
-      inventory->size--;
       delete_by_value(inventory, items.name->elements[i]);
       return;
     }
