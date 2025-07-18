@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 void free_vector(struct vector *vec);
 void resize(int newSize, struct vector *vec);
@@ -63,11 +64,13 @@ void print_vector(struct vector *vec) {
 }
 
 void delete_by_index(struct vector *vec, int index) {
-
   free(vec->elements[index]);
+
+
   for (int j = index; j < vec->size - 1; j++) {
     vec->elements[j] = vec->elements[j + 1];
   }
+  vec->elements[vec->size - 1] = NULL;
   vec->size--;
 }
 
