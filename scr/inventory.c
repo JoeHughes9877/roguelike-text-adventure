@@ -56,21 +56,21 @@ void remove_item(char *players_input) {
     return;
   }
 
-  for (int i = 0; i < items.num_items_in_room; i++) {
+  for (int i = 0; i < items.name->size; i++) {
     if (strstr(players_input, inventory->elements[i]) != NULL) {
       printf("You cast away '%s', hopeful it will one day find purpose in "
              "another’s hands.\n",
              inventory->elements[i]);
-      delete_by_value(inventory, items.name->elements[i]);
+      delete_by_index(inventory, i);
       return;
     }
   }
 }
 
 struct vector *init_inventory() {
-  struct vector *inventory =       malloc(sizeof(struct vector) + INVENTORY_SIZE * sizeof(char *));
+  struct vector *inventory =
+      malloc(sizeof(struct vector) + INVENTORY_SIZE * sizeof(char *));
   inventory->size = 0;
   inventory->capacity = 8;
- inventory->elements = malloc(inventory->capacity * sizeof(char *));
   return inventory;
 }
