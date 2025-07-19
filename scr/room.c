@@ -2,13 +2,14 @@
 #include "vector.h"
 #include <stdio.h>
 #include <string.h>
+#include "database.h"
 
 void look_around_room() {
   if (items.num_items_in_room == 0) {
     printf("you see nothing of value.\n");
   }
 
-  for (int i = 0; i < items.num_items_in_room; i++) {
+  for (int i = 0; i < items.name->size; i++) {
     printf("You look around the room and spot %s.\nIt appears to be %s\n",
            items.name->elements[i], items.description->elements[i]);
   }
