@@ -17,7 +17,7 @@ void print_inventory() {
     return;
   }
 
-  printf("\n╔════════════════════════════════════╗\n");
+  printf("╔════════════════════════════════════╗\n");
   printf("║     Your questionable haul:        ║\n");
   printf("╚════════════════════════════════════╝\n");
 
@@ -27,24 +27,37 @@ void print_inventory() {
 }
 
 void add_to_inventory(char *players_input) {
+  // Check if inventory is full
   if (inventory->size == inventory->capacity) {
     printf("Hah! As if that’d fit — maybe ask a Mudcrab for advice?\n");
     return;
   }
+
+  // Iterate through the items in the room
   for (int i = 0; i < items.num_items_in_room; i++) {
+
+    // Check if player's input matches the current item
     if (strstr(players_input, items.name->elements[i]) != NULL) {
-      inventory->elements[inventory->size] = strdup(items.name->elements[i]);
+      inventory->elements[inventory->size] =
+          malloc(strlen(items.name->elements[i]) + 1);
+
+      snprintf(inventory->elements[inventory->size],
+               strlen(items.name->elements[i]) + 1, "%s",
+               items.name->elements[i]);
 
       printf("You carefully stow the %s into your pack.\n",
              items.name->elements[i]);
+
       remove_item_from_room(items.name->elements[i]);
 
       inventory->size++;
       return;
     }
   }
+
   printf("You don't see that item here.\n");
 }
+
 void remove_item(char *players_input) {
   if (!inventory) {
     inventory = init_inventory();
@@ -68,9 +81,10 @@ void remove_item(char *players_input) {
 }
 
 struct vector *init_inventory() {
-  struct vector *inventory =
-      malloc(sizeof(struct vector) + INVENTORY_SIZE * sizeof(char *));
+  struct vector *inventory = malloc(sizeof(struct vector));
   inventory->size = 0;
   inventory->capacity = 8;
+  inventory->elements = malloc(inventory->capacity * sizeof(char *));
+
   return inventory;
 }
