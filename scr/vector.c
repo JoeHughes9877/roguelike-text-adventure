@@ -19,7 +19,6 @@ void delete_by_value(struct vector *vec, char *target_value) {
       break;
     }
   }
-  free_vector(vec);
 }
 
 void resize(int newSize, struct vector *vec) {
