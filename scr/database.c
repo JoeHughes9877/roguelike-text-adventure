@@ -72,12 +72,13 @@ void generate_items_in_room() {
     const unsigned char *item_type = sqlite3_column_text(stmt, 2);
 
     items.name->elements[i] =
-        strndup((const char *)item_name, sizeof(items.name->elements[i]) - 1);
+        strndup((const char *)item_name, sizeof(item_name));
+
     items.description->elements[i] =
-        strndup((const char *)item_description,
-                sizeof(items.description->elements[i]) - 1);
+        strndup((const char *)item_description, sizeof(item_description));
+
     items.type->elements[i] =
-        strndup((const char *)item_type, sizeof(items.type->elements[i]) - 1);
+        strndup((const char *)item_type, sizeof(item_type));
   }
 
   sqlite3_finalize(stmt);
