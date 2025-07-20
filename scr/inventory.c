@@ -48,9 +48,8 @@ void add_to_inventory(char *players_input) {
       printf("You carefully stow the %s into your pack.\n",
              items.name->elements[i]);
 
-      remove_item_from_room(items.name->elements[i]);
-
       inventory->size++;
+      remove_item_from_room(items.name->elements[i]);
       return;
     }
   }
