@@ -31,9 +31,11 @@ void remove_item_from_room(char *item) {
       items.name = delete_by_index(items.name, i);
       items.description = delete_by_index(items.description, i);
       items.type = delete_by_index(items.type, i);
-
       items.num_items_in_room--;
       return;
     }
   }
+
+  // If item wasn't found
+  printf("Item %s not found in room.\n", item);
 }
