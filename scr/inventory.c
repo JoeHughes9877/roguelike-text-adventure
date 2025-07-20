@@ -69,11 +69,12 @@ void remove_item(char *players_input) {
     return;
   }
 
-  for (int i = 0; i < items.name->size; i++) {
+  for (int i = 0; i < inventory->size; i++) {
     if (strstr(players_input, inventory->elements[i]) != NULL) {
       printf("You cast away '%s', hopeful it will one day find purpose in "
              "another’s hands.\n",
              inventory->elements[i]);
+
       delete_by_index(inventory, i);
       return;
     }
