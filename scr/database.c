@@ -49,6 +49,10 @@ void generate_items_in_room() {
   // +1 makes it ensures it works within the range
   items.num_items_in_room = rand() % (max_items - min_items + 1);
 
+  items.name->size = items.num_items_in_room;
+  items.description->size = items.num_items_in_room;
+  items.type->size = items.num_items_in_room;
+
   // gets the items from the DB
   sqlite3 *DB = NULL;
   open_database(&DB);
