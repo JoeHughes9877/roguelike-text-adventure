@@ -7,7 +7,7 @@
 
 void free_vector(struct vector *vec);
 void resize(int newSize, struct vector *vec);
-struct vector  *delete_by_index(struct vector *vec, int index);
+struct vector *delete_by_index(struct vector *vec, int index);
 
 void delete_by_value(struct vector *vec, char *target_value) {
   for (int i = 0; i < vec->size; i++) {
@@ -24,15 +24,15 @@ void delete_by_value(struct vector *vec, char *target_value) {
 void resize(int newSize, struct vector *vec) {
   char **temp = malloc((newSize) * sizeof(char *));
 
-  if(!temp) {
+  if (!temp) {
     printf("malloc failed. ");
     return;
   }
 
   for (int i = 0; i < vec->size; i++) {
     temp[i] = vec->elements[i];
-  } 
-  
+  }
+
   for (int i = 0; i < vec->size; i++) {
     free(vec->elements[i]);
   }
@@ -63,14 +63,18 @@ void print_vector(struct vector *vec) {
   }
 }
 
-struct vector *delete_by_index(struct vector *vec, int index) { 
-  free(vec->elements[index]);
-
+struct vector *delete_by_index(struct vector *vec, int index) {
   for (int j = index; j < vec->size - 1; j++) {
     vec->elements[j] = vec->elements[j + 1];
   }
-  vec->elements[vec->size - 1] = NULL;
   vec->size--;
+  vec->elements[vec->size] = NULL;
+
+  vec->elements = realloc(vec->elements, vec->size);
+  if (vec->elements == NULL) {
+    printf("realloc failed");
+    return vec;
+  }
 
   return vec;
 }
