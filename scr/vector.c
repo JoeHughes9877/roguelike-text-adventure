@@ -64,17 +64,34 @@ void print_vector(struct vector *vec) {
 }
 
 struct vector *delete_by_index(struct vector *vec, int index) {
-  for (int j = index; j < vec->size - 1; j++) {
-    vec->elements[j] = vec->elements[j + 1];
-  }
-  vec->size--;
-  vec->elements[vec->size] = NULL;
 
-  vec->elements = realloc(vec->elements, vec->size);
-  if (vec->elements == NULL) {
-    printf("realloc failed");
+  if (index < 0 || index >= vec->size) {
+    printf("Invalid index %d! Nothing to delete.\n", index);
     return vec;
   }
 
-  return vec;
+  free(vec->elements[index]);
+
+  for (int j = index; j < vec->size - 1; j++) {
+    vec->elements[j] = vec->elements[j + 1];
+  }
+  char **temp = NULL;
+  vec->size--;
+
+  if (vec->size > 0 && vec->elements != NULL) {
+    vec->elements[vec->size] = NULL;
+  }
+  if (vec->size == 0) {
+    free(vec->elements);
+    vec->elements = NULL;
+  } else {
+    temp = realloc(vec->elements, vec->size * sizeof(char *));
+  }
+
+  if (temp == NULL) {
+    return vec;
+  } else {
+    vec->elements = temp;
+    return vec;
+  }
 }
