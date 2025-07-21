@@ -17,6 +17,7 @@ void print_inventory() {
     return;
   }
 
+  printf("╔════════════════════════════════════╗\n");
   printf("║     Your questionable haul:        ║\n");
   printf("╚════════════════════════════════════╝\n");
 
