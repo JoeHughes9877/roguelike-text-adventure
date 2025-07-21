@@ -35,4 +35,7 @@ int open_database(sqlite3 **DB);
 // initalise items struct
 struct vector *init_items();
 
+// freeing memory
+void free_items_from_room();
+
 #endif
