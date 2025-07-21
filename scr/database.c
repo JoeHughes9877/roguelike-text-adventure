@@ -42,82 +42,83 @@ void generate_room() {
 }
 
 void generate_items_in_room() {
-  printf("DEBUG: Generating items for the room...\n");
-
   // randomly generate the amount of items in a room
   int min_items = 0;
   int max_items = 4;
 
-  // +1 makes it ensure it works within the range
+  // +1 makes it ensures it works within the range
   items.num_items_in_room = rand() % (max_items - min_items + 1);
-  printf("DEBUG: Generated %d items for the room.\n", items.num_items_in_room);
+  printf("Number of items to generate in the room: %d\n",
+         items.num_items_in_room);
 
   items.name->size = items.num_items_in_room;
   items.description->size = items.num_items_in_room;
   items.type->size = items.num_items_in_room;
 
-  if (items.num_items_in_room == 0) {
+  // gets the items from the DB
+  sqlite3 *DB = NULL;
+  int rc =
+      open_database(&DB); // Ensure you check the return value of open_database
+  if (rc != SQLITE_OK) {
+    printf("Failed to open database: %s\n", sqlite3_errmsg(DB));
     return;
   }
-
-  // Opening the database to retrieve items
-  sqlite3 *DB = NULL;
-  open_database(&DB);
-
-  printf("DEBUG: Opening database to fetch item definitions...\n");
+  printf("Database opened successfully\n");
 
   char *sql = "SELECT name, description, type FROM item_definitions "
               "ORDER BY RANDOM() "
               "LIMIT ?";
 
   sqlite3_stmt *stmt;
-  printf("DEBUG: Preparing SQL statement: '%s'\n", sql);
-
-  sqlite3_prepare_v2(
+  rc = sqlite3_prepare_v2(
       DB, sql, -1, &stmt,
-      NULL); // -1 allows it to automatically determine the length of the script
+      NULL); // -1 allows it to automatically determine length of script
+  if (rc != SQLITE_OK) {
+    printf("Failed to prepare statement: %s\n", sqlite3_errmsg(DB));
+    sqlite3_close(DB);
+    return;
+  }
+  printf("SQL query prepared successfully\n");
 
-  // Binding the number of items to the query
   sqlite3_bind_int(stmt, 1, items.num_items_in_room);
-  printf("DEBUG: SQL statement bound with num_items_in_room = %d\n",
+  printf("Bound the number of items (%d) to SQL query\n",
          items.num_items_in_room);
 
   for (int i = 0; i < items.num_items_in_room; i++) {
-    printf("DEBUG: Fetching item %d...\n", i + 1);
-
-    int step_result = sqlite3_step(stmt);
-    if (step_result != SQLITE_ROW) {
-      printf("DEBUG: SQLite error fetching item %d: %s\n", i + 1,
-             sqlite3_errmsg(DB));
-      break;
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_ROW) {
+      printf("Error stepping through result: %s\n", sqlite3_errmsg(DB));
+      break; // Exit loop if there's an issue with fetching the result
     }
 
     const unsigned char *item_name = sqlite3_column_text(stmt, 0);
     const unsigned char *item_description = sqlite3_column_text(stmt, 1);
     const unsigned char *item_type = sqlite3_column_text(stmt, 2);
 
-    printf("DEBUG: Fetched item - Name: '%s', Description: '%s', Type: '%s'\n",
-           item_name, item_description, item_type);
+    printf("Fetched item %d: \n", i + 1);
+    printf("  Name: %s\n", item_name);
+    printf("  Description: %s\n", item_description);
+    printf("  Type: %s\n", item_type);
 
     items.name->elements[i] =
         strndup((const char *)item_name, strlen((char *)item_name));
-
     items.description->elements[i] = strndup((const char *)item_description,
                                              strlen((char *)item_description));
-
     items.type->elements[i] =
         strndup((const char *)item_type, strlen((char *)item_type));
 
-    printf("DEBUG: Item %d added to room. Name: '%s', Description: '%s', Type: "
-           "'%s'\n",
-           i + 1, items.name->elements[i], items.description->elements[i],
-           items.type->elements[i]);
+    // Debug: print the dynamically allocated strings
+    printf("  Item %d after allocation:\n", i + 1);
+    printf("    Name: %s\n", items.name->elements[i]);
+    printf("    Description: %s\n", items.description->elements[i]);
+    printf("    Type: %s\n", items.type->elements[i]);
   }
 
   sqlite3_finalize(stmt);
-  sqlite3_close(DB);
+  printf("Statement finalized\n");
 
-  printf("DEBUG: Database closed and item generation complete.\n");
+  sqlite3_close(DB);
+  printf("Database connection closed\n");
 }
 
 int open_database(sqlite3 **DB) {
@@ -133,7 +134,8 @@ int open_database(sqlite3 **DB) {
 }
 
 struct vector *init_items() {
-  struct vector *items_in_room = malloc(sizeof(struct vector));
+  struct vector *items_in_room =
+      malloc(sizeof(struct vector) + MAX_ITEMS_IN_ROOM * sizeof(char *));
 
   items_in_room->size = 0;
   items_in_room->capacity = MAX_ITEMS_IN_ROOM;
