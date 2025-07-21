@@ -48,8 +48,6 @@ void generate_items_in_room() {
 
   // +1 makes it ensures it works within the range
   items.num_items_in_room = rand() % (max_items - min_items + 1);
-  printf("Number of items to generate in the room: %d\n",
-         items.num_items_in_room);
 
   items.name->size = items.num_items_in_room;
   items.description->size = items.num_items_in_room;
@@ -63,7 +61,6 @@ void generate_items_in_room() {
     printf("Failed to open database: %s\n", sqlite3_errmsg(DB));
     return;
   }
-  printf("Database opened successfully\n");
 
   char *sql = "SELECT name, description, type FROM item_definitions "
               "ORDER BY RANDOM() "
@@ -78,11 +75,8 @@ void generate_items_in_room() {
     sqlite3_close(DB);
     return;
   }
-  printf("SQL query prepared successfully\n");
 
   sqlite3_bind_int(stmt, 1, items.num_items_in_room);
-  printf("Bound the number of items (%d) to SQL query\n",
-         items.num_items_in_room);
 
   for (int i = 0; i < items.num_items_in_room; i++) {
     rc = sqlite3_step(stmt);
@@ -95,30 +89,16 @@ void generate_items_in_room() {
     const unsigned char *item_description = sqlite3_column_text(stmt, 1);
     const unsigned char *item_type = sqlite3_column_text(stmt, 2);
 
-    printf("Fetched item %d: \n", i + 1);
-    printf("  Name: %s\n", item_name);
-    printf("  Description: %s\n", item_description);
-    printf("  Type: %s\n", item_type);
-
     items.name->elements[i] =
         strndup((const char *)item_name, strlen((char *)item_name));
     items.description->elements[i] = strndup((const char *)item_description,
                                              strlen((char *)item_description));
     items.type->elements[i] =
         strndup((const char *)item_type, strlen((char *)item_type));
-
-    // Debug: print the dynamically allocated strings
-    printf("  Item %d after allocation:\n", i + 1);
-    printf("    Name: %s\n", items.name->elements[i]);
-    printf("    Description: %s\n", items.description->elements[i]);
-    printf("    Type: %s\n", items.type->elements[i]);
   }
 
   sqlite3_finalize(stmt);
-  printf("Statement finalized\n");
-
   sqlite3_close(DB);
-  printf("Database connection closed\n");
 }
 
 int open_database(sqlite3 **DB) {
