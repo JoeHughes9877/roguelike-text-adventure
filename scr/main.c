@@ -24,9 +24,8 @@ int main() {
   game_loop();
 }
 void opening() {
-  printf(
-      "====================================================================="
-      "==========\n");
+  printf("====================================================================="
+         "==========\n");
   printf("                        The Elder Scrolls: Shadows of Tamriel\n");
   printf("====================================================================="
          "==========\n\n");
@@ -54,7 +53,8 @@ void opening() {
       get_string("But before your journey begins — tell me: who are you? ");
 
   printf("With the taste of freedom fresh on your lips, what path will you "
-         "take? %s", name);
+         "take? %s",
+         name);
 }
 
 void game_loop() {
@@ -78,7 +78,7 @@ void game_loop() {
     } else if (strstr(player_input, "take") != NULL) {
       add_to_inventory(player_input);
     } else if (strstr(player_input, "drop") != NULL) {
-      remove_item(player_input);
+      remove_item_from_inventory(player_input);
     } else {
       printf("Even the gods seem puzzled by that request.\n");
     }
