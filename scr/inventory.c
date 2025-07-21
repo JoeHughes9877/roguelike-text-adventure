@@ -17,7 +17,6 @@ void print_inventory() {
     return;
   }
 
-  printf("╔════════════════════════════════════╗\n");
   printf("║     Your questionable haul:        ║\n");
   printf("╚════════════════════════════════════╝\n");
 
@@ -33,10 +32,7 @@ void add_to_inventory(char *players_input) {
     return;
   }
 
-  // Iterate through the items in the room
   for (int i = 0; i < items.num_items_in_room; i++) {
-
-    // Check if player's input matches the current item
     if (strstr(players_input, items.name->elements[i]) != NULL) {
       inventory->elements[inventory->size] =
           malloc(strlen(items.name->elements[i]) + 1);
@@ -57,7 +53,7 @@ void add_to_inventory(char *players_input) {
   printf("You don't see that item here.\n");
 }
 
-void remove_item(char *players_input) {
+void remove_item_from_inventory(char *players_input) {
   if (!inventory) {
     inventory = init_inventory();
   }
@@ -70,8 +66,8 @@ void remove_item(char *players_input) {
 
   for (int i = 0; i < inventory->size; i++) {
     if (strstr(players_input, inventory->elements[i]) != NULL) {
-      printf("You cast away '%s', hopeful it will one day find purpose in "
-             "another’s hands.\n",
+      printf("A Daedric sigil burns into the air as '%s' is consumed by the "
+             "void, claimed by the mad god...\n",
              inventory->elements[i]);
 
       delete_by_index(inventory, i);
