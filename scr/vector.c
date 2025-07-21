@@ -21,7 +21,7 @@ void delete_by_value(struct vector *vec, char *target_value) {
   }
 }
 
-void resize(int newSize, struct vector *vec) {
+void resize_vector(int newSize, struct vector *vec) {
   char **temp = malloc((newSize) * sizeof(char *));
 
   if (!temp) {
@@ -83,9 +83,11 @@ struct vector *delete_by_index(struct vector *vec, int index) {
   }
   if (vec->size == 0) {
     free(vec->elements);
-    vec->elements = NULL;
   } else {
     temp = realloc(vec->elements, vec->size * sizeof(char *));
+    if (!temp) {
+      return vec;
+    }
   }
 
   if (temp == NULL) {
