@@ -13,6 +13,7 @@ void delay(int number_of_seconds);
 char *lower_player_input(char *input);
 
 int main() {
+  set_start_room();
   inventory = init_inventory();
   items.name = init_items();
   items.description = init_items();
@@ -64,24 +65,32 @@ void game_loop() {
     player_input = lower_player_input(player_input);
 
     if (strstr(player_input, "go north") != NULL) {
-      if (can_go_dir("north") == 0) {
+      if (can_go_dir("north") == 1) {
         generate_room();
         generate_exits_in_room("north");
+      } else {
+        printf("You cant go that way.\n");
       }
     } else if (strstr(player_input, "go east") != NULL) {
-      if (can_go_dir("east") == 0) {
+      if (can_go_dir("east") == 1) {
         generate_room();
         generate_exits_in_room("east");
+      } else {
+        printf("You cant go that way.\n");
       }
     } else if (strstr(player_input, "go south") != NULL) {
-      if (can_go_dir("south") == 0) {
+      if (can_go_dir("south") == 1) {
         generate_room();
         generate_exits_in_room("south");
+      } else {
+        printf("You cant go that way.\n");
       }
     } else if (strstr(player_input, "go west") != NULL) {
-      if (can_go_dir("west") == 0) {
+      if (can_go_dir("west") == 1) {
         generate_room();
         generate_exits_in_room("west");
+      } else {
+        printf("You cant go that way.\n");
       }
     } else if (strstr(player_input, "look around") != NULL) {
       look_around_room();
