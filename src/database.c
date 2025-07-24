@@ -39,7 +39,6 @@ void generate_room() {
          room.base_description);
 
   sqlite3_close(DB);
-
   generate_items_in_room();
 }
 
