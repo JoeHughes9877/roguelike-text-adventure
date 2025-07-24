@@ -9,6 +9,9 @@
 char *exits_in_room[4];
 int num_of_exits = 0;
 
+char *directions[] = {"north", "east", "south", "west"};
+char *opposites[] = {"south", "west", "north", "east"};
+
 void look_around_room() {
   if (items.num_items_in_room == 0) {
     printf("You look around but see nothing of value.\n");
@@ -39,6 +42,10 @@ void set_start_room() {
       "oddly worn, as if it hides more than just years of neglect.";
 
   items.num_items_in_room = 0;
+
+  num_of_exits = 2;
+  exits_in_room[0] = "north";
+  exits_in_room[1] = "west";
 }
 
 void remove_item_from_room(char *item) {
@@ -60,9 +67,6 @@ void remove_item_from_room(char *item) {
 void generate_exits_in_room(char *entry_direction) {
   num_of_exits = generate_random_number(1, 3) + 1;
 
-  char *directions[] = {"north", "east", "south", "west"};
-  char *opposites[] = {"south", "west", "north", "east"};
-
   // fisher yates shuffle
   for (int i = num_of_exits; i > 0; i--) {
     int j = rand() % (i + 1);
@@ -79,4 +83,17 @@ void generate_exits_in_room(char *entry_direction) {
       exits_in_room[0] = opposites[j];
     }
   }
+}
+
+int can_go_dir(char *direction) {
+  if (direction == NULL)
+    return 0;
+  for (int i = 0; i < 4; i++) {
+    if (exits_in_room[i] == NULL)
+      continue;
+    if (strcmp(direction, exits_in_room[i]) == 1) {
+      return 1;
+    }
+  }
+  return 0;
 }
