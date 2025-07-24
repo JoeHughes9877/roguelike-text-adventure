@@ -5,14 +5,28 @@
 #include <stdlib.h>
 #include <string.h>
 
+// definition
+char *exits_in_room[4];
+int num_of_exits = 0;
+
 void look_around_room() {
   if (items.num_items_in_room == 0) {
-    printf("you see nothing of value.\n");
+    printf("You look around but see nothing of value.\n");
+  } else {
+    printf("As you look around, you notice:\n");
+    for (int i = 0; i < items.num_items_in_room; i++) {
+      printf(" - %s: %s\n", items.name->elements[i],
+             items.description->elements[i]);
+    }
   }
 
-  for (int i = 0; i < items.num_items_in_room; i++) {
-    printf("You look around the room and spot %s.\nIt appears to be %s\n",
-           items.name->elements[i], items.description->elements[i]);
+  if (num_of_exits > 0) {
+    printf("\nExits:\n");
+    for (int j = 0; j < num_of_exits; j++) {
+      printf(" - %s\n", exits_in_room[j]);
+    }
+  } else {
+    printf("\nThere are no visible exits.\n");
   }
 }
 
@@ -44,26 +58,25 @@ void remove_item_from_room(char *item) {
 }
 
 void generate_exits_in_room(char *entry_direction) {
-  int num_of_exits = generate_random_number(0, 3);
+  num_of_exits = generate_random_number(1, 3) + 1;
 
   char *directions[] = {"north", "east", "south", "west"};
   char *opposites[] = {"south", "west", "north", "east"};
 
-  // sets the first entrance to the opposite dir of entrance into room
-  for (int i = 0; i < num_of_exits; ++i) {
-    if (strstr(entry_direction, directions[i]) != NULL) {
-      exits_in_room[0] = opposites[i];
-      break;
-    }
-  }
-
   // fisher yates shuffle
-  for (int i = num_of_exits - 1; i > 0; i--) {
+  for (int i = num_of_exits; i > 0; i--) {
     int j = rand() % (i + 1);
-    char *tmp = exits_in_room[j];
+    if (strcmp(directions[j], entry_direction) == 0) {
+      i++;
+      continue;
+    }
+    char *tmp = directions[j];
     exits_in_room[j] = exits_in_room[i];
     exits_in_room[i] = tmp;
-
-    printf("%s", exits_in_room[i]);
+  }
+  for (int j = 0; j < 4; j++) { // 4 is not a magic number its the num of dir
+    if (strcmp(directions[j], entry_direction) == 0) {
+      exits_in_room[0] = opposites[j];
+    }
   }
 }
