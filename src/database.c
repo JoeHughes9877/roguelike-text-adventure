@@ -98,7 +98,23 @@ void generate_items_in_room() {
   sqlite3_close(DB);
 }
 
-void generate_exits_in_room() { generate_exits_in_room(1, 4); }
+void generate_exits_in_room(char *entry_direction) {
+  int exits = generate_random_number(0, 3);
+
+  if (strstr(entry_direction, "north") != NULL) {
+    exit_directions[0] = "south";
+  } else if (strstr(entry_direction, "east") != NULL) {
+    exit_directions[0] = "west";
+  } else if (strstr(entry_direction, "south") != NULL) {
+    exit_directions[0] = "north";
+  } else if (strstr(entry_direction, "west") != NULL) {
+    exit_directions[0] = "east";
+  }
+
+  for (int i = 1; i < exits; i++) {
+    exit_directions[i] =
+  }
+}
 
 int open_database(sqlite3 **DB) {
   int exit = sqlite3_open("data/database.db", DB);
