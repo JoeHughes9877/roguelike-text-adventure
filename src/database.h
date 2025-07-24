@@ -18,7 +18,7 @@ struct CurrentItemsInRoom {
   int num_items_in_room;
 };
 
-extern char *exit_directions[4];
+extern char *exits_in_room[4];
 
 extern struct CurrentRoom room;
 extern struct CurrentItemsInRoom items;
@@ -33,11 +33,14 @@ extern sqlite3 *db;
 void generate_room();
 void generate_items_in_room();
 int open_database(sqlite3 **DB);
+int generate_random_number(int min_value, int max_value);
 
 // initalise items struct
 struct vector *init_items();
 
 // freeing memory
 void free_items_from_room();
+
+int generate_random_number(int min_value, int max_value);
 
 #endif
