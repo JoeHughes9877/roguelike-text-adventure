@@ -1,7 +1,7 @@
 #include "database.h"
 #include "inventory.h"
 #include "room.h"
-#include <ctype.h>
+#include "utils.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -65,6 +65,7 @@ void game_loop() {
 
     if (strstr(player_input, "go north") != NULL) {
       generate_room();
+      generate_exits_in_room("north");
     } else if (strstr(player_input, "go east") != NULL) {
       generate_room();
     } else if (strstr(player_input, "go south") != NULL) {
@@ -83,12 +84,4 @@ void game_loop() {
       printf("Even the gods seem puzzled by that request.\n");
     }
   }
-}
-
-char *lower_player_input(char *input) {
-  int input_len = strlen(input);
-  for (int i = 0; i < input_len; i++) {
-    input[i] = tolower(input[i]);
-  }
-  return input;
 }
