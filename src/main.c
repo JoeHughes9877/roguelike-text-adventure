@@ -64,17 +64,25 @@ void game_loop() {
     player_input = lower_player_input(player_input);
 
     if (strstr(player_input, "go north") != NULL) {
-      generate_room();
-      generate_exits_in_room("north");
+      if (can_go_dir("north") == 0) {
+        generate_room();
+        generate_exits_in_room("north");
+      }
     } else if (strstr(player_input, "go east") != NULL) {
-      generate_room();
-      generate_exits_in_room("east");
+      if (can_go_dir("east") == 0) {
+        generate_room();
+        generate_exits_in_room("east");
+      }
     } else if (strstr(player_input, "go south") != NULL) {
-      generate_room();
-      generate_exits_in_room("south");
+      if (can_go_dir("south") == 0) {
+        generate_room();
+        generate_exits_in_room("south");
+      }
     } else if (strstr(player_input, "go west") != NULL) {
-      generate_room();
-      generate_exits_in_room("west");
+      if (can_go_dir("west") == 0) {
+        generate_room();
+        generate_exits_in_room("west");
+      }
     } else if (strstr(player_input, "look around") != NULL) {
       look_around_room();
     } else if (strstr(player_input, "inventory") != NULL) {
