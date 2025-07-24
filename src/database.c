@@ -11,6 +11,8 @@ struct CurrentItemsInRoom items;
 
 int const MAX_ITEMS_IN_ROOM = 4;
 
+int generate_random_number(int min_value, int max_value);
+
 void generate_room() {
 
   sqlite3 *DB = NULL;
@@ -42,12 +44,7 @@ void generate_room() {
 }
 
 void generate_items_in_room() {
-  // randomly generate the amount of items in a room
-  int min_items = 0;
-  int max_items = 4;
-
-  // +1 makes it ensures it works within the range
-  items.num_items_in_room = rand() % (max_items - min_items + 1);
+  items.num_items_in_room = generate_random_number(0, 4);
 
   items.name->size = items.num_items_in_room;
   items.description->size = items.num_items_in_room;
@@ -101,6 +98,8 @@ void generate_items_in_room() {
   sqlite3_close(DB);
 }
 
+void generate_exits_in_room() { generate_exits_in_room(1, 4); }
+
 int open_database(sqlite3 **DB) {
   int exit = sqlite3_open("data/database.db", DB);
   char *errmsg = "database connection failed.";
@@ -136,4 +135,8 @@ void free_items_from_room() {
     free(items.description->elements[i]);
     free(items.type->elements[i]);
   }
+}
+
+int generate_random_number(int min_value, int max_value) {
+  return rand() % (max_value - min_value + 1);
 }
