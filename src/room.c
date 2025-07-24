@@ -91,7 +91,7 @@ int can_go_dir(char *direction) {
   for (int i = 0; i < 4; i++) {
     if (exits_in_room[i] == NULL)
       continue;
-    if (strcmp(direction, exits_in_room[i]) == 1) {
+    if (strcmp(direction, exits_in_room[i]) == 0) {
       return 1;
     }
   }
