@@ -1,6 +1,8 @@
 #include "database.h"
+#include "utils.h"
 #include "vector.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 void look_around_room() {
@@ -39,4 +41,29 @@ void remove_item_from_room(char *item) {
 
   // If item wasn't found
   printf("Item %s not found in room.\n", item);
+}
+
+void generate_exits_in_room(char *entry_direction) {
+  int num_of_exits = generate_random_number(0, 3);
+
+  char *directions[] = {"north", "east", "south", "west"};
+  char *opposites[] = {"south", "west", "north", "east"};
+
+  // sets the first entrance to the opposite dir of entrance into room
+  for (int i = 0; i < num_of_exits; ++i) {
+    if (strstr(entry_direction, directions[i]) != NULL) {
+      exits_in_room[0] = opposites[i];
+      break;
+    }
+  }
+
+  // fisher yates shuffle
+  for (int i = num_of_exits - 1; i > 0; i--) {
+    int j = rand() % (i + 1);
+    char *tmp = exits_in_room[j];
+    exits_in_room[j] = exits_in_room[i];
+    exits_in_room[i] = tmp;
+
+    printf("%s", exits_in_room[i]);
+  }
 }
