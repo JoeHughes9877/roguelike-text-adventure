@@ -16,7 +16,7 @@ int const MAX_ITEMS_IN_ROOM = 4;
 
 int generate_random_number(int min_value, int max_value);
 
-void generate_room() {
+void generate_room(void) {
   sqlite3 *DB = NULL;
   open_database(&DB);
 
@@ -44,7 +44,7 @@ void generate_room() {
   generate_items_in_room();
 }
 
-void generate_items_in_room() {
+void generate_items_in_room(void) {
   items.num_items_in_room = generate_random_number(0, 4);
 
   items.name->size = items.num_items_in_room;
@@ -119,7 +119,7 @@ int open_database(sqlite3 **DB) {
   }
 }
 
-struct vector *init_items() {
+struct vector *init_items(void) {
   struct vector *items_in_room =
       malloc(sizeof(struct vector) + MAX_ITEMS_IN_ROOM * sizeof(char *));
 
@@ -135,7 +135,7 @@ struct vector *init_items() {
   return items_in_room;
 }
 
-void free_items_from_room() {
+void free_items_from_room(void) {
   for (int i = 0; i < items.num_items_in_room; i++) {
     free(items.name->elements[i]);
     free(items.description->elements[i]);

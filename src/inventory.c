@@ -12,7 +12,7 @@ struct vector *inventory = NULL;
 
 const int INVENTORY_SIZE = 8;
 
-void print_inventory() {
+void print_inventory(void) {
   if (inventory->size == 0) {
     printf("You check your pockets... Yep, still nothing.\n");
     printf("Maybe it’s time to ‘borrow’ a few things...\n");
@@ -81,7 +81,7 @@ void remove_item_from_inventory(char *players_input) {
   }
 }
 
-struct vector *init_inventory() {
+struct vector *init_inventory(void) {
   struct vector *inventory = malloc(sizeof(struct vector));
   inventory->size = 0;
   inventory->capacity = 8;
