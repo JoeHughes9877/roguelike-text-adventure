@@ -4,7 +4,7 @@ OBJ = src/main.c src/database.c src/inventory.c src/room.c src/utils.c src/vecto
 OUT = game
 
 all:
-	$(CC) $(CFLAGS) $(OBJ) -o $(OUT)
+	$(CC) $(CFLAGS) $(OBJ) -o $(OUT) -lsqlite3
 
 clean:
 	rm -f $(OUT)
