@@ -18,9 +18,6 @@ struct CurrentItemsInRoom {
   int num_items_in_room;
 };
 
-extern char *exits_in_room[4];
-extern int num_of_exits;
-
 extern struct CurrentRoom room;
 extern struct CurrentItemsInRoom items;
 
