@@ -1,10 +1,11 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include "database.h"
 #include "vector.h"
 #include <sqlite3.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define _POSIX_C_SOURCE 200809L
 #include <string.h>
 
 struct CurrentRoom room;
@@ -86,12 +87,9 @@ void generate_items_in_room() {
         const unsigned char* item_description = sqlite3_column_text(stmt, 1);
         const unsigned char* item_type = sqlite3_column_text(stmt, 2);
 
-        items.name->elements[i] =
-            strndup((const char*)item_name, strlen((char*)item_name));
-        items.description->elements[i] = strndup(
-            (const char*)item_description, strlen((char*)item_description));
-        items.type->elements[i] =
-            strndup((const char*)item_type, strlen((char*)item_type));
+        items.name->elements[i] = strdup((const char*)item_name);
+        items.description->elements[i] = strdup((const char*)item_description);
+        items.type->elements[i] = strdup((const char*)item_type);
     }
 
     sqlite3_finalize(stmt);
