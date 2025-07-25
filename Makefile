@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pedantic -std=c11 -g -I./src
+CFLAGS = -Wall -Wextra -Werror -pedantic -std=c11 -g -I./include
 OBJ = src/main.c src/database.c src/inventory.c src/room.c src/utils.c src/vector.c
 OUT = game
 
