@@ -1,10 +1,11 @@
-#include "database.h"
 #include <ctype.h>
 #include <sqlite3.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "database.h"
 
 int generate_random_number(int min_value, int max_value) {
   return rand() % (max_value - min_value + 1);

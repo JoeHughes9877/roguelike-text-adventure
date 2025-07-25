@@ -1,10 +1,12 @@
 #include "inventory.h"
-#include "database.h"
-#include "room.h"
-#include "vector.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "database.h"
+#include "room.h"
+#include "vector.h"
 
 struct vector *inventory = NULL;
 
@@ -62,8 +64,8 @@ void remove_item_from_inventory(char *players_input) {
   }
   // if empty
   if (inventory->size == 0) {
-    printf(
-        "Even Sheogorath couldn’t conjure an item from *this* sorry state.\n");
+    printf("Even Sheogorath couldn’t conjure an item from *this* sorry "
+           "state.\n");
     return;
   }
 

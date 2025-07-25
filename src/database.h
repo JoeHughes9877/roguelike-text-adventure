@@ -1,8 +1,9 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include "vector.h"
 #include <sqlite3.h>
+
+#include "vector.h"
 
 struct CurrentRoom {
   char *name_prefix;

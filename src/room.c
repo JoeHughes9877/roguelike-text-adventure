@@ -1,9 +1,10 @@
-#include "database.h"
-#include "utils.h"
-#include "vector.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "database.h"
+#include "utils.h"
+#include "vector.h"
 
 char *get_opposite(char *dir);
 
@@ -40,7 +41,8 @@ void set_start_room() {
   room.name_core = "Imperial City prison cell";
   room.base_description =
       "Cold stone walls and rusty iron bars surround your cell. A "
-      "flickering torch casts shadows over a straw-strewn cot. One wall feels "
+      "flickering torch casts shadows over a straw-strewn cot. One wall "
+      "feels "
       "oddly worn, as if it hides more than just years of neglect.";
 
   items.num_items_in_room = 0;

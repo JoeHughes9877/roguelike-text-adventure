@@ -1,4 +1,5 @@
 #include "vector.h"
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,7 +65,6 @@ void print_vector(struct vector *vec) {
 }
 
 struct vector *delete_by_index(struct vector *vec, int index) {
-
   if (index < 0 || index >= vec->size) {
     printf("Invalid index %d! Nothing to delete.\n", index);
     return vec;

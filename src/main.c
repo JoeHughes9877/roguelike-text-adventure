@@ -1,10 +1,11 @@
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+
 #include "database.h"
 #include "inventory.h"
 #include "room.h"
 #include "utils.h"
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
 
 void opening();
 void game_loop();
