@@ -100,7 +100,8 @@ char* copy_string(const char* input) {
     size_t length = strlen(input);
     char* copy = malloc(length + 1);
     if (copy) {
-        memcpy(copy, input, length + 1);
+        memcpy(copy, input, length);
+        copy[length] = '\0';
     }
     return copy;
 }
