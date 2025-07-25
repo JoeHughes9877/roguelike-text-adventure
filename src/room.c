@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+char *get_opposite(char *dir);
+
 // definition
 char *exits_in_room[4];
 int num_of_exits = 0;
@@ -65,23 +67,35 @@ void remove_item_from_room(char *item) {
 }
 
 void generate_exits_in_room(char *entry_direction) {
-  num_of_exits = generate_random_number(1, 3) + 1;
+  char *temp_dir[4];
+  for (int i = 0; i < 4; i++) {
+    temp_dir[i] = directions[i];
+  }
 
   // fisher yates shuffle
-  for (int i = num_of_exits; i > 0; i--) {
+  for (int i = num_of_exits - 1; i > 0; i--) {
     int j = rand() % (i + 1);
-    if (strcmp(directions[j], entry_direction) == 0) {
-      i++;
-      continue;
-    }
     char *tmp = directions[j];
-    exits_in_room[j] = exits_in_room[i];
-    exits_in_room[i] = tmp;
+    temp_dir[j] = temp_dir[i];
+    temp_dir[i] = tmp;
   }
-  for (int j = 0; j < 4; j++) { // 4 is not a magic number its the num of dir
-    if (strcmp(directions[j], entry_direction) == 0) {
-      exits_in_room[0] = opposites[j];
+
+  num_of_exits = generate_random_number(1, 3) + 1;
+  for (int i = 0; i < num_of_exits; i++) {
+    exits_in_room[i] = temp_dir[i];
+  }
+
+  char *required_exit = get_opposite(entry_direction);
+  int found = 0;
+  for (int i = 0; i < num_of_exits; i++) {
+    if (strcmp(exits_in_room[i], required_exit) == 0) {
+      found = 1;
+      break;
     }
+  }
+
+  if (!found && required_exit != NULL) {
+    exits_in_room[0] = required_exit;
   }
 }
 
@@ -96,4 +110,13 @@ int can_go_dir(char *direction) {
     }
   }
   return 0;
+}
+
+char *get_opposite(char *dir) {
+  for (int i = 0; i < 4; i++) {
+    if (strcmp(directions[i], dir) == 0) {
+      return opposites[i];
+    }
+  }
+  return NULL;
 }
