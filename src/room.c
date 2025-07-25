@@ -15,7 +15,7 @@ int num_of_exits = 0;
 char *directions[] = {"north", "east", "south", "west"};
 char *opposites[] = {"south", "west", "north", "east"};
 
-void look_around_room() {
+void look_around_room(void) {
   if (items.num_items_in_room == 0) {
     printf("You look around but see nothing of value.\n");
   } else {
@@ -36,7 +36,7 @@ void look_around_room() {
   }
 }
 
-void set_start_room() {
+void set_start_room(void) {
   room.name_prefix = "A grim and foreboding";
   room.name_core = "Imperial City prison cell";
   room.base_description =
