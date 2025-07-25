@@ -24,6 +24,7 @@ int main() {
 
   game_loop();
 }
+
 void opening() {
   printf("====================================================================="
          "==========\n");
@@ -40,8 +41,7 @@ void opening() {
   printf("  Dust rains from the ceiling. Somewhere nearby, a wall has "
          "collapsed to your north.\n");
   printf("  Screams echo down the corridor... and your cell door west of you "
-         "creaks "
-         "open.\n\n");
+         "creaks open.\n\n");
   printf("  Freedom — unexpected and unearned — lies before you.\n");
 
   printf("---------------------------------------------------------------------"
@@ -49,13 +49,15 @@ void opening() {
   printf("\nPress Enter to continue...");
   getchar(); // Waits for the user to press Enter
 
-  printf("\nThe threads of fate twist around you...");
-  char *name =
-      get_string("But before your journey begins — tell me: who are you? ");
+  printf("\nThe threads of fate coil tighter around you...\n");
+  char name[100];
+  printf(
+      "But before your tale unfolds — tell me, traveler: what is your name? ");
+  fgets(name, sizeof(name), stdin);
+  name[strcspn(name, "\n")] = '\0'; // Remove trailing newline
 
-  printf("With the taste of freedom fresh on your lips, what path will you "
-         "take? %s",
-         name);
+  printf("\nFreedom clings to your skin like the chill of the crypt.\n");
+  printf("And so, %s... what destiny will you carve from the chaos?\n", name);
 }
 
 void game_loop() {
