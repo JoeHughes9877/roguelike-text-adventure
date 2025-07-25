@@ -12,4 +12,7 @@ char *get_string(char *data);
 // Converts a string to lowercase (modifies in place)
 char *lower_player_input(char *input);
 
+// Duplicate string and copy original string into this new memory
+char *copy_string(const char *input);
+
 #endif // UTILS_H

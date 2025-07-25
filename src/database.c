@@ -1,6 +1,5 @@
-#define _POSIX_C_SOURCE 200809L
-
 #include "database.h"
+#include "utils.h"
 #include "vector.h"
 #include <sqlite3.h>
 #include <stddef.h>
@@ -87,13 +86,23 @@ void generate_items_in_room() {
         const unsigned char* item_description = sqlite3_column_text(stmt, 1);
         const unsigned char* item_type = sqlite3_column_text(stmt, 2);
 
-        items.name->elements[i] = strdup((const char*)item_name);
-        items.description->elements[i] = strdup((const char*)item_description);
-        items.type->elements[i] = strdup((const char*)item_type);
+        items.name->elements[i] = copy_string((const char*)item_name);
+        items.description->elements[i] =
+            copy_string((const char*)item_description);
+        items.type->elements[i] = copy_string((const char*)item_type);
     }
 
     sqlite3_finalize(stmt);
     sqlite3_close(DB);
+}
+
+char* copy_string(const char* input) {
+    size_t length = strlen(input);
+    char* copy = malloc(length + 1);
+    if (copy) {
+        memcpy(copy, input, length + 1);
+    }
+    return copy;
 }
 
 int open_database(sqlite3** DB) {
