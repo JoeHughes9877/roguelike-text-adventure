@@ -29,16 +29,16 @@ char *get_string(char *data);
 extern sqlite3 *db;
 
 // Functions from database handling
-void generate_room();
-void generate_items_in_room();
+void generate_room(void);
+void generate_items_in_room(void);
 int open_database(sqlite3 **DB);
 int generate_random_number(int min_value, int max_value);
 
 // initalise items struct
-struct vector *init_items();
+struct vector *init_items(void);
 
 // freeing memory
-void free_items_from_room();
+void free_items_from_room(void);
 
 int generate_random_number(int min_value, int max_value);
 
