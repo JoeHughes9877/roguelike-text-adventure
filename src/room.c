@@ -1,6 +1,6 @@
-#include "database.h"
-#include "utils.h"
-#include "vector.h"
+#include "../include/database.h"
+#include "../include/utils.h"
+#include "../include/vector.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

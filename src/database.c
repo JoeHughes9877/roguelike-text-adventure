@@ -1,5 +1,5 @@
-#include "database.h"
-#include "vector.h"
+#include "../include/database.h"
+#include "../include/vector.h"
 #include <sqlite3.h>
 #include <stddef.h>
 #include <stdio.h>

@@ -1,7 +1,7 @@
-#include "database.h"
-#include "inventory.h"
-#include "room.h"
-#include "utils.h"
+#include "../include/database.h"
+#include "../include/inventory.h"
+#include "../include/room.h"
+#include "../include/utils.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
