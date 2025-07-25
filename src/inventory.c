@@ -12,18 +12,20 @@ const int INVENTORY_SIZE = 8;
 
 void print_inventory() {
   if (inventory->size == 0) {
-    printf("You check your pockets... Yep, still nothing. Maybe try stealing "
-           "something?\n");
+    printf("You check your pockets... Yep, still nothing.\n");
+    printf("Maybe it’s time to ‘borrow’ a few things...\n");
     return;
   }
 
   printf("╔════════════════════════════════════╗\n");
-  printf("║     Your questionable haul:        ║\n");
-  printf("╚════════════════════════════════════╝\n");
+  printf("║           Bag of Holding           ║\n");
+  printf("╠════════════════════════════════════╣\n");
 
   for (int i = 0; i < inventory->size; i++) {
-    printf("  • %s\n", inventory->elements[i]);
+    printf("║  • %s\n", inventory->elements[i]);
   }
+
+  printf("╚════════════════════════════════════╝\n");
 }
 
 void add_to_inventory(char *players_input) {
