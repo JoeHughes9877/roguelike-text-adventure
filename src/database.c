@@ -51,8 +51,7 @@ void generate_items_in_room() {
 
   // gets the items from the DB
   sqlite3 *DB = NULL;
-  int rc =
-      open_database(&DB); // Ensure you check the return value of open_database
+  int rc = open_database(&DB);
   if (rc != SQLITE_OK) {
     printf("Failed to open database: %s\n", sqlite3_errmsg(DB));
     return;
@@ -81,20 +80,68 @@ void generate_items_in_room() {
       break; // Exit loop if there's an issue with fetching the result
     }
 
-    const unsigned char *item_name = sqlite3_column_text(stmt, 0);
-    const unsigned char *item_description = sqlite3_column_text(stmt, 1);
-    const unsigned char *item_type = sqlite3_column_text(stmt, 2);
+    const unsigned char *collumns[3];
+    for (int col = 0; col < 3; col++) {
+      collumns[col] = sqlite3_column_text(stmt, col);
+    }
 
     items.name->elements[i] =
-        strndup((const char *)item_name, strlen((char *)item_name));
-    items.description->elements[i] = strndup((const char *)item_description,
-                                             strlen((char *)item_description));
+        strndup((const char *)collumns[0], strlen((char *)collumns[0]));
+    items.description->elements[i] =
+        strndup((const char *)collumns[1], strlen((char *)collumns[1]));
     items.type->elements[i] =
-        strndup((const char *)item_type, strlen((char *)item_type));
+        strndup((const char *)collumns[2], strlen((char *)collumns[2]));
   }
 
   sqlite3_finalize(stmt);
   sqlite3_close(DB);
+}
+
+void generate_enemies_in_room() {
+  int num_of_enemies_in_room = generate_random_number(0, 2);
+
+  // gets the items from the DB
+  sqlite3 *DB = NULL;
+  int rc = open_database(&DB);
+  if (rc != SQLITE_OK) {
+    printf("Failed to open database: %s\n", sqlite3_errmsg(DB));
+    return;
+  }
+
+  char *sql = "SELECT name, description, type FROM item_definitions "
+              "ORDER BY RANDOM() "
+              "LIMIT ?";
+
+  sqlite3_stmt *stmt;
+  rc = sqlite3_prepare_v2(
+      DB, sql, -1, &stmt,
+      NULL); // -1 allows it to automatically determine length of script
+  if (rc != SQLITE_OK) {
+    printf("Failed to prepare statement: %s\n", sqlite3_errmsg(DB));
+    sqlite3_close(DB);
+    return;
+  }
+
+  sqlite3_bind_int(stmt, 1, num_of_enemies_in_room);
+
+  for (int i = 0; i < num_of_enemies_in_room; i++) {
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_ROW) {
+      printf("Error stepping through result: %s\n", sqlite3_errmsg(DB));
+      break; // Exit loop if there's an issue with fetching the result
+    }
+
+    const unsigned char *collumns[6];
+    for (int col = 0; col < 6; col++) {
+      collumns[col] = sqlite3_column_text(stmt, col);
+    }
+
+    // TODO
+    // items.name->elements[i] =
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(DB);
+  }
 }
 
 int open_database(sqlite3 **DB) {
