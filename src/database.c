@@ -1,4 +1,5 @@
 #include "../include/database.h"
+#include "../include/entity.h"
 #include "../include/vector.h"
 #include <sqlite3.h>
 #include <stddef.h>
@@ -10,6 +11,8 @@ struct CurrentRoom room;
 struct CurrentItemsInRoom items;
 
 int const MAX_ITEMS_IN_ROOM = 4;
+
+void generate_enemies_in_room(void);
 
 int generate_random_number(int min_value, int max_value);
 
@@ -40,6 +43,7 @@ void generate_room() {
 
   sqlite3_close(DB);
   generate_items_in_room();
+  generate_enemies_in_room();
 }
 
 void generate_items_in_room() {
@@ -97,8 +101,17 @@ void generate_items_in_room() {
   sqlite3_close(DB);
 }
 
-void generate_enemies_in_room() {
+void generate_enemies_in_room(void) {
   int num_of_enemies_in_room = generate_random_number(0, 2);
+
+  Enemy **enemies = malloc(sizeof(Enemy) * num_of_enemies_in_room);
+  if (enemies == NULL) {
+    printf("\nenemies malloc failed.");
+  }
+
+  for (int i = 0; i < num_of_enemies_in_room; i++) {
+    enemies[i] = make_enemy();
+  }
 
   // gets the items from the DB
   sqlite3 *DB = NULL;
@@ -108,7 +121,9 @@ void generate_enemies_in_room() {
     return;
   }
 
-  char *sql = "SELECT name, description, type FROM item_definitions "
+  char *sql = "SELECT name, description, base_health, base_attack, "
+              "base_defense, xp_reward FROM "
+              "enemy_definitions " // Explicitly select columns for clarity
               "ORDER BY RANDOM() "
               "LIMIT ?";
 
@@ -131,17 +146,29 @@ void generate_enemies_in_room() {
       break; // Exit loop if there's an issue with fetching the result
     }
 
-    const unsigned char *collumns[6];
+    const unsigned char *columns[6];
     for (int col = 0; col < 6; col++) {
-      collumns[col] = sqlite3_column_text(stmt, col);
+      columns[col] = sqlite3_column_text(stmt, col);
     }
 
-    // TODO
-    // items.name->elements[i] =
+    enemies[i]->name = strdup((const char *)sqlite3_column_text(stmt, 0));
+    enemies[i]->description =
+        strdup((const char *)sqlite3_column_text(stmt, 1));
+    enemies[i]->base.health = sqlite3_column_int(stmt, 2);
+    enemies[i]->base.attack = sqlite3_column_int(stmt, 3);
+    enemies[i]->base.defense = sqlite3_column_int(stmt, 4);
+    enemies[i]->xp_reward = sqlite3_column_int(stmt, 5);
 
-    sqlite3_finalize(stmt);
-    sqlite3_close(DB);
+    printf("Enemy:\n");
+    printf("  Name: %s\n", enemies[i]->name);
+    printf("  Description: %s\n", enemies[i]->description);
+    printf("  Health: %d\n", enemies[i]->base.health);
+    printf("  Attack: %d\n", enemies[i]->base.attack);
+    printf("  Defense: %d\n", enemies[i]->base.defense);
+    printf("  XP Reward: %d\n", enemies[i]->xp_reward);
   }
+  sqlite3_finalize(stmt);
+  sqlite3_close(DB);
 }
 
 int open_database(sqlite3 **DB) {
