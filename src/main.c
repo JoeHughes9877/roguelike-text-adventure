@@ -1,5 +1,6 @@
 #include "../include/database.h"
 #include "../include/inventory.h"
+#include "../include/player.h"
 #include "../include/room.h"
 #include "../include/utils.h"
 #include <stdio.h>
@@ -14,6 +15,7 @@ char *lower_player_input(char *input);
 
 int main() {
   set_start_room();
+  init_player();
   inventory = init_inventory();
   items.name = init_items();
   items.description = init_items();
@@ -102,6 +104,8 @@ void game_loop() {
       add_to_inventory(player_input);
     } else if (strstr(player_input, "drop") != NULL) {
       remove_item_from_inventory(player_input);
+    } else if (strstr(player_input, "stats") != NULL) {
+      check_stats();
     } else {
       printf("Even the gods seem puzzled by that request.\n");
     }
