@@ -4,8 +4,21 @@
 
 Player player;
 
-void take_damage(int amount) {}
-void add_health(int amount) {}
+void take_damage(int amount) {
+  if (player.health - amount <= 0) {
+    player.health = 0;
+  } else {
+    player.health -= amount;
+  }
+}
+
+void add_health(int amount) {
+  if (player.health + amount >= player.max_health) {
+    player.health = player.max_health;
+  } else {
+    player.health += amount;
+  }
+}
 
 void drain_stamina(int amount) {
   if (player.stamina - amount <= 0) {
