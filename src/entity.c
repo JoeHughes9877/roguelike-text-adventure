@@ -91,9 +91,15 @@ Entity *init_entity() {
   new_ent->stamina = new_ent->max_stamina;
 
   new_ent->defense = 10; // base defence
-  new_ent->damage = 10;  // base damage
+  new_ent->attack = 10;  // base damage
 
   return new_ent;
+}
+
+Enemy *make_enemy() {
+  Enemy *enemy = malloc(sizeof(Enemy));
+
+  return enemy;
 }
 
 void free_entity(Entity *ent) { free(ent); }
