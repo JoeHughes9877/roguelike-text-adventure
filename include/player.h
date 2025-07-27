@@ -8,17 +8,19 @@ typedef struct {
   int max_stamina;
 } Player;
 
+extern Player player;
+
 // Function declarations
-void init_player(Player *player);
+void init_player();
 
-void take_damage(Player *player, int amount);
-void add_health(Player *player, int amount);
+void take_damage(int amount);
+void add_health(int amount);
 
-void drain_stamina(Player *player, int amount);
-void add_stamina(Player *player, int amount);
+void drain_stamina(int amount);
+void add_stamina(int amount);
 
-void check_stats(const Player *player);
+void check_stats();
 
-void check_if_ded(Player *player, int health);
+void check_if_ded();
 
 #endif
