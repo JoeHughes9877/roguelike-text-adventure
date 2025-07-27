@@ -1,6 +1,6 @@
 #include "../include/database.h"
+#include "../include/entity.h"
 #include "../include/inventory.h"
-#include "../include/player.h"
 #include "../include/room.h"
 #include "../include/utils.h"
 #include <stdio.h>
@@ -8,14 +8,15 @@
 #include <time.h>
 
 void opening();
-void game_loop();
+void game_loop(Entity player);
 void delay(int number_of_seconds);
 
 char *lower_player_input(char *input);
 
 int main() {
   set_start_room();
-  init_player();
+  Entity player;
+  player = *init_entity();
   inventory = init_inventory();
   items.name = init_items();
   items.description = init_items();
@@ -24,7 +25,7 @@ int main() {
   set_start_room();
   opening();
 
-  game_loop();
+  game_loop(player);
 }
 
 void opening() {
@@ -62,7 +63,7 @@ void opening() {
   printf("And so, %s... what destiny will you carve from the chaos?\n", name);
 }
 
-void game_loop() {
+void game_loop(Entity player) {
   while (1) {
     char *player_input = get_string("What do you do? ");
 
@@ -105,7 +106,7 @@ void game_loop() {
     } else if (strstr(player_input, "drop") != NULL) {
       remove_item_from_inventory(player_input);
     } else if (strstr(player_input, "stats") != NULL) {
-      check_stats();
+      check_stats(player);
     } else {
       printf("Even the gods seem puzzled by that request.\n");
     }
