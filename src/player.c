@@ -2,13 +2,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+Player player;
+
 void take_damage(int amount) {}
 void add_health(int amount) {}
 
-void drain_stamina(int amount) {}
-void add_stamina(int amount) {}
-
-Player player;
+void drain_stamina(int amount) {
+  if (player.stamina - amount <= 0) {
+    player.stamina = 0;
+  } else {
+    player.stamina -= amount;
+  }
+}
+void add_stamina(int amount) {
+  if (player.stamina + amount >= player.max_stamina) {
+    player.stamina = player.max_stamina;
+  } else {
+    player.stamina += amount;
+  }
+}
 
 void check_stats() {
   printf("You assess your condition:\n");
