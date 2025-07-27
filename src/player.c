@@ -28,6 +28,7 @@ void drain_stamina(int amount) {
     player.stamina -= amount;
   }
 }
+
 void add_stamina(int amount) {
   if (player.stamina + amount >= player.max_stamina) {
     player.stamina = player.max_stamina;
