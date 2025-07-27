@@ -1,5 +1,6 @@
 #include "../include/player.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void take_damage(int amount) {}
 void add_health(int amount) {}
@@ -39,7 +40,16 @@ void check_stats() {
   }
 }
 
-void check_if_ded() {}
+void check_if_ded() {
+  if (player.health <= 0) {
+    printf(
+        "As your life force fades, the cold grasp of Oblivion takes hold...\n");
+    printf("You have succumbed to the darkness that lurks beyond Tamriel.\n");
+    printf("May your soul find peace in the afterlife. Farewell, brave "
+           "adventurer.\n");
+    exit(0);
+  }
+}
 
 void init_player() {
   player.max_health = 100;
