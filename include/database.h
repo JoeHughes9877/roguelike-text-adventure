@@ -41,4 +41,6 @@ void free_items_from_room();
 
 int generate_random_number(int min_value, int max_value);
 
+void generate_enemies_in_room(void);
+
 #endif
