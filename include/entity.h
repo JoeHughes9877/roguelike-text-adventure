@@ -6,7 +6,16 @@ typedef struct {
   int max_health;
   int stamina;
   int max_stamina;
+  int damage;
+  int defense;
 } Entity;
+
+typedef struct {
+  Entity base;
+  char *name;
+  char *description;
+  int xp_reward;
+} Enemy;
 
 // Function declarations
 Entity *init_entity();
