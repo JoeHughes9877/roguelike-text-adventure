@@ -90,6 +90,9 @@ Entity *init_entity() {
   new_ent->max_stamina = 100;
   new_ent->stamina = new_ent->max_stamina;
 
+  new_ent->defense = 10; // base defence
+  new_ent->damage = 10;  // base damage
+
   return new_ent;
 }
 
