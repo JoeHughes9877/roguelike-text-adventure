@@ -6,7 +6,7 @@ typedef struct {
   int max_health;
   int stamina;
   int max_stamina;
-  int damage;
+  int attack;
   int defense;
 } Entity;
 
@@ -32,4 +32,5 @@ void check_if_ded(Entity ent);
 
 void free_entity(Entity *ent);
 
+Enemy *make_enemy();
 #endif
