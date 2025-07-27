@@ -10,6 +10,7 @@ void take_damage(int amount) {
   } else {
     player.health -= amount;
   }
+  check_if_ded();
 }
 
 void add_health(int amount) {
