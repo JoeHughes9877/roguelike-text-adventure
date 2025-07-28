@@ -14,7 +14,6 @@ struct CurrentRoom {
 struct CurrentItemsInRoom {
   struct vector *name;
   struct vector *description;
-  struct vector *type;
   int num_items_in_room;
 };
 
