@@ -1,10 +1,13 @@
 #include "../include/database.h"
 #include <ctype.h>
 #include <sqlite3.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+int generate_random_number(int min_value, int max_value);
 
 int generate_random_number(int min_value, int max_value) {
   return rand() % (max_value - min_value + 1);
@@ -44,4 +47,16 @@ char *lower_player_input(char *input) {
     input[i] = tolower(input[i]);
   }
   return input;
+}
+
+int generate_random_number_bias(int min_value, int max_value, int bias) {
+  bool tmp = rand() < ((RAND_MAX + 1.0) * ((bias + 1) / 2.0));
+
+  if (tmp) {
+    return generate_random_number(min_value, max_value);
+  } else {
+    return 0;
+  }
+
+  return rand() % (max_value - min_value + 1);
 }
