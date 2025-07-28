@@ -1,5 +1,6 @@
 #include "../include/database.h"
 #include "../include/entity.h"
+#include "../include/utils.h"
 #include "../include/vector.h"
 #include <sqlite3.h>
 #include <stddef.h>
@@ -102,7 +103,8 @@ void generate_items_in_room() {
 }
 
 void generate_enemies_in_room(void) {
-  int num_of_enemies_in_room = generate_random_number(0, 3);
+  int num_of_enemies_in_room =
+      generate_random_number_bias(1, 2, 0.65); // 0.7 (65% chance),
 
   Enemy **enemies = malloc(sizeof(Enemy) * num_of_enemies_in_room);
   if (enemies == NULL) {
