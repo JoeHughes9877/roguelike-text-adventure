@@ -1,8 +1,10 @@
 #include "../include/database.h"
 #include "../include/entity.h"
 #include "../include/inventory.h"
+#include "../include/items.h"
 #include "../include/room.h"
 #include "../include/utils.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -104,9 +106,11 @@ void game_loop(Entity player) {
     } else if (strstr(player_input, "take") != NULL) {
       add_to_inventory(player_input);
     } else if (strstr(player_input, "drop") != NULL) {
-      remove_item_from_inventory(player_input);
+      remove_item_from_inventory(player_input, true);
     } else if (strstr(player_input, "stats") != NULL) {
       check_stats(player);
+    } else if (strstr(player_input, "use") != NULL) {
+      use_item(player_input);
     } else {
       printf("Even the gods seem puzzled by that request.\n");
     }
