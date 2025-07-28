@@ -22,7 +22,6 @@ int main() {
   inventory = init_inventory();
   items.name = init_items();
   items.description = init_items();
-  items.type = init_items();
 
   set_start_room();
   opening();
