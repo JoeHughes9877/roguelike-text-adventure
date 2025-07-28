@@ -55,7 +55,6 @@ void remove_item_from_room(char *item) {
     if (strcmp(items.name->elements[i], item) == 0) {
       items.name = delete_by_index(items.name, i);
       items.description = delete_by_index(items.description, i);
-      items.type = delete_by_index(items.type, i);
 
       items.num_items_in_room--;
       return;
