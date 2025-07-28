@@ -2,6 +2,7 @@
 #include "../include/database.h"
 #include "../include/room.h"
 #include "../include/vector.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,7 +57,7 @@ void add_to_inventory(char *players_input) {
   printf("You don't see that item here.\n");
 }
 
-void remove_item_from_inventory(char *players_input) {
+void remove_item_from_inventory(char *players_input, bool is_dropping) {
   if (!inventory) {
     inventory = init_inventory();
   }
@@ -69,10 +70,11 @@ void remove_item_from_inventory(char *players_input) {
 
   for (int i = 0; i < inventory->size; i++) {
     if (strstr(players_input, inventory->elements[i]) != NULL) {
-      printf("A Daedric sigil burns into the air as '%s' is consumed by the "
-             "void, claimed by the mad god...\n",
-             inventory->elements[i]);
-
+      if (is_dropping) {
+        printf("A Daedric sigil burns into the air as '%s' is consumed by the "
+               "void, claimed by the mad god...\n",
+               inventory->elements[i]);
+      }
       delete_by_index(inventory, i);
       return;
     }
@@ -86,4 +88,13 @@ struct vector *init_inventory() {
   inventory->elements = malloc(inventory->capacity * sizeof(char *));
 
   return inventory;
+}
+
+int check_if_in_inventory(char *item) {
+  for (int i = 0; i < inventory->size; i++) {
+    if (strstr(item, inventory->elements[i]) != NULL) {
+      return 1;
+    }
+  }
+  return 0;
 }
