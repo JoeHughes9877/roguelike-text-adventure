@@ -1,4 +1,27 @@
+#include "../include/items.h"
+#include "../include/inventory.h"
 #include <stdio.h>
+#include <string.h>
+
+void use_item(char *item_name) {
+  for (int i = 0; function_map[i].name != NULL; i++) {
+    if (strstr(item_name, function_map[i].name) != NULL) {
+      if (check_if_in_inventory(item_name) == 1) {
+        function_map[i].func();
+#include <string.h>
+
+        if (strstr(function_map[i].type, "consumable") != NULL ||
+            strstr(function_map[i].type, "tool") != NULL ||
+            strstr(function_map[i].type, "scroll") != NULL) {
+          remove_item_from_inventory(item_name, false);
+        }
+        return;
+      }
+    }
+  }
+  printf("Thou hast no '%s'.\n", item_name);
+  return;
+}
 
 void use_iron_longsword() {
   printf("You draw the iron longsword, its familiar weight a comfort as you "
@@ -161,9 +184,9 @@ void read_scroll_of_healing_hands() {
 }
 
 void read_scroll_of_detect_life() {
-  printf(
-      "You read the scroll of detect life, and a faint, ethereal aura spreads, "
-      "revealing the hidden presences of living creatures nearby.\n");
+  printf("You read the scroll of detect life, and a faint, ethereal aura "
+         "spreads, "
+         "revealing the hidden presences of living creatures nearby.\n");
 }
 
 void examine_rusty_key() {
@@ -207,8 +230,8 @@ void pick_up_ancient_coin() {
 }
 
 void wear_silver_ring() {
-  printf(
-      "You slip the plain silver ring onto your finger, a simple adornment.\n");
+  printf("You slip the plain silver ring onto your finger, a simple "
+         "adornment.\n");
 }
 
 void wear_enchanted_amulet() {
@@ -245,3 +268,76 @@ void interact_lucky_rabbits_foot() {
   printf("You rub the lucky rabbit's foot, a superstitious gesture, hoping it "
          "truly brings you good fortune in this perilous place.\n");
 }
+
+FunctionMap function_map[] = {
+    // Weapons
+    {"iron longsword", "weapon", use_iron_longsword},
+    {"iron greatsword", "weapon", use_iron_greatsword},
+    {"shiv", "weapon", use_shiv},
+    {"iron dagger", "weapon", use_iron_dagger},
+    {"rusty sword", "weapon", use_rusty_sword},
+    {"steel mace", "weapon", use_steel_mace},
+
+    // Armor
+    {"leather cuirass", "armor", equip_leather_cuirass},
+    {"fine steel helmet", "armor", equip_fine_steel_helmet},
+    {"prisoner's ragged trousers", "armor", equip_prisoners_ragged_trousers},
+    {"leather boots", "armor", equip_leather_boots},
+    {"imperial guard shield", "armor", equip_imperial_guard_shield},
+    {"studded leather armor", "armor", equip_studded_leather_armor},
+    {"wooden shield", "armor", equip_wooden_shield},
+
+    // Consumables
+    {"potion of healing", "consumable", drink_potion_of_healing},
+    {"minor healing potion", "consumable", drink_minor_healing_potion},
+    {"grand healing potion", "consumable", drink_grand_healing_potion},
+    {"mana potion", "consumable", drink_mana_potion},
+    {"poison of weakness", "consumable", apply_poison_of_weakness},
+    {"sweetroll", "consumable", eat_sweetroll},
+    {"moldy bread", "consumable", eat_moldy_bread},
+    {"welkynd stone", "consumable", use_welkynd_stone},
+    {"glowing mushroom", "consumable", interact_glowing_mushroom},
+
+    // Tools
+    {"lockpick", "tool", use_lockpick},
+    {"master lockpick", "tool", use_master_lockpick},
+    {"torch", "tool", use_torch},
+    {"rusty shovel", "tool", use_rusty_shovel},
+    {"spyglass", "tool", use_spyglass},
+    {"bear trap", "tool", use_bear_trap},
+
+    // Scrolls
+    {"scroll of fireball", "scroll", read_scroll_of_fireball},
+    {"scroll of ice storm", "scroll", read_scroll_of_ice_storm},
+    {"scroll of fire storm", "scroll", read_scroll_of_fire_storm},
+    {"scroll of lightning bolt", "scroll", read_scroll_of_lightning_bolt},
+    {"scroll of healing hands", "scroll", read_scroll_of_healing_hands},
+    {"scroll of detect life", "scroll", read_scroll_of_detect_life},
+
+    // Quest Items
+    {"rusty key", "quest item", examine_rusty_key},
+    {"journal entry", "quest item", examine_journal_entry},
+    {"old map fragment", "quest item", examine_old_map_fragment},
+    {"worn leather map", "quest item", examine_worn_leather_map},
+
+    // Currency
+    {"gold coin", "currency", pick_up_gold_coin},
+    {"bag of gold (small)", "currency", pick_up_bag_of_gold_small},
+    {"bag of gold (large)", "currency", pick_up_bag_of_gold_large},
+    {"ancient coin", "currency", pick_up_ancient_coin},
+
+    // Jewelry
+    {"silver ring", "jewelry", wear_silver_ring},
+    {"enchanted amulet", "jewelry", wear_enchanted_amulet},
+
+    // Book
+    {"lockpicking guide", "book", read_lockpicking_guide},
+
+    // Miscellaneous
+    {"waterlogged book", "misc", interact_waterlogged_book},
+    {"empty wine bottle", "misc", interact_empty_wine_bottle},
+    {"broken lantern", "misc", interact_broken_lantern},
+    {"lucky rabbit's foot", "misc", interact_lucky_rabbits_foot},
+
+    {NULL, NULL, NULL} // Null terminator
+};
