@@ -43,9 +43,8 @@ make
 | `use [item]`    | Use an item from inventory    |
 | `attack`        | Fight nearby enemies          |
 | `inventory`     | View your items               |
-| `stats`         | check player stats (health)  |
-| `save`          | Save game progress            |
-| `quit`          | Exit the game                 |
+| `stats`         | check player stats (health)   |
+
 
 ## 🗂️ Project Structure
 
