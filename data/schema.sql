@@ -143,7 +143,7 @@ INSERT INTO room_templates (name_prefix, name_core, base_description, possible_f
 ('whispering', 'stone circle', 'a circle of ancient standing stones that seem to hum with faint, unsettling whispers.', 'mossy stones, faint whispers, ancient power, eerie silence');
 
 
-
+-- i am aware i no longer need type or value, if i remove it everything breaks... --
 INSERT INTO item_definitions (name, description, type, value) VALUES
 ('iron longsword', 'A standard, well-worn iron longsword. Good for basic combat.', 'weapon', 50),
 ('leather cuirass', 'A simple leather chestpiece, offering basic protection.', 'armor', 75),
