@@ -12,4 +12,6 @@ char *get_string(char *data);
 // Converts a string to lowercase (modifies in place)
 char *lower_player_input(char *input);
 
+int generate_random_number_bias(int min_value, int max_value, double bias);
+
 #endif // UTILS_H
