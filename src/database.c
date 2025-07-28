@@ -52,7 +52,6 @@ void generate_items_in_room() {
 
   items.name->size = items.num_items_in_room;
   items.description->size = items.num_items_in_room;
-  items.type->size = items.num_items_in_room;
 
   // gets the items from the DB
   sqlite3 *DB = NULL;
@@ -62,7 +61,7 @@ void generate_items_in_room() {
     return;
   }
 
-  char *sql = "SELECT name, description, type FROM item_definitions "
+  char *sql = "SELECT name, description FROM item_definitions "
               "ORDER BY RANDOM() "
               "LIMIT ?";
 
@@ -94,8 +93,6 @@ void generate_items_in_room() {
         strndup((const char *)collumns[0], strlen((char *)collumns[0]));
     items.description->elements[i] =
         strndup((const char *)collumns[1], strlen((char *)collumns[1]));
-    items.type->elements[i] =
-        strndup((const char *)collumns[2], strlen((char *)collumns[2]));
   }
 
   sqlite3_finalize(stmt);
@@ -209,6 +206,5 @@ void free_items_from_room() {
   for (int i = 0; i < items.num_items_in_room; i++) {
     free(items.name->elements[i]);
     free(items.description->elements[i]);
-    free(items.type->elements[i]);
   }
 }
