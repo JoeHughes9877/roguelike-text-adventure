@@ -102,7 +102,7 @@ void generate_items_in_room() {
 }
 
 void generate_enemies_in_room(void) {
-  int num_of_enemies_in_room = generate_random_number(0, 2);
+  int num_of_enemies_in_room = generate_random_number(0, 3);
 
   Enemy **enemies = malloc(sizeof(Enemy) * num_of_enemies_in_room);
   if (enemies == NULL) {
@@ -159,13 +159,16 @@ void generate_enemies_in_room(void) {
     enemies[i]->base.defense = sqlite3_column_int(stmt, 4);
     enemies[i]->xp_reward = sqlite3_column_int(stmt, 5);
 
-    printf("Enemy:\n");
-    printf("  Name: %s\n", enemies[i]->name);
-    printf("  Description: %s\n", enemies[i]->description);
-    printf("  Health: %d\n", enemies[i]->base.health);
-    printf("  Attack: %d\n", enemies[i]->base.attack);
-    printf("  Defense: %d\n", enemies[i]->base.defense);
-    printf("  XP Reward: %d\n", enemies[i]->xp_reward);
+    printf("\nName: %s\n", enemies[i]->name);
+
+    printf("Description: %s\n", enemies[i]->description);
+
+    printf("--- Stats ---\n");
+    printf("Vitality : %d\n", enemies[i]->base.health);
+    printf("Might    : %d\n", enemies[i]->base.attack);
+    printf("Guard    : %d\n", enemies[i]->base.defense);
+    printf("XP Bounty: %d\n", enemies[i]->xp_reward);
+    printf("-------------\n");
   }
   sqlite3_finalize(stmt);
   sqlite3_close(DB);
