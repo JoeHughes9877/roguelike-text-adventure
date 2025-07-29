@@ -36,32 +36,15 @@ void add_stamina(Entity ent, int amount) {
 }
 
 void check_stats(Entity ent) {
-  printf("You assess your condition:\n");
+  printf("You assess your condition:\n\n");
 
-  // Health status
-  if (ent.health >= 75) {
-    printf("You’re in good shape, with %d health.\n", ent.health);
-  } else if (ent.health >= 50) {
-    printf("You’re hurt, but still standing. (%d health)\n", ent.health);
-  } else if (ent.health >= 25) {
-    printf("Your wounds are serious; you need to be careful. (%d health)\n",
-           ent.health);
-  } else {
-    printf("You’re badly injured and near death. (%d health)\n", ent.health);
-  }
-
-  // Stamina status
-  if (ent.stamina >= 75) {
-    printf("Your stamina is high, ready for whatever comes. (%d stamina)\n",
-           ent.stamina);
-  } else if (ent.stamina >= 50) {
-    printf("You’re a bit tired, but can keep going. (%d stamina)\n",
-           ent.stamina);
-  } else if (ent.stamina >= 25) {
-    printf("Fatigue is setting in; rest soon. (%d stamina)\n", ent.stamina);
-  } else {
-    printf("You’re exhausted and need to recover. (%d stamina)\n", ent.stamina);
-  }
+  // Header
+  printf("===stats===\n");
+  printf("Defense: %i\n", ent.defense);
+  printf("Attack: %i\n", ent.attack);
+  printf("Health: %i\n", ent.health);
+  printf("Stamina: %i\n", ent.stamina);
+  printf("===========\n\n");
 }
 
 // player death currently, will end game on any death including enemy
@@ -84,10 +67,11 @@ Entity *init_entity() {
     return NULL;
   }
 
-  new_ent->max_health = 100;
+  // 30 is base for attack & stamina
+  new_ent->max_health = 30;
   new_ent->health = new_ent->max_health;
 
-  new_ent->max_stamina = 100;
+  new_ent->max_stamina = 30;
   new_ent->stamina = new_ent->max_stamina;
 
   new_ent->defense = 10; // base defence
