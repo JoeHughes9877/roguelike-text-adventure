@@ -1,12 +1,16 @@
 #include "../include/items.h"
+#include "../include/entity.h"
 #include "../include/inventory.h"
 #include <stdio.h>
 #include <string.h>
+
+static int found_item_index = -1;
 
 void use_item(char *item_name) {
   for (int i = 0; function_map[i].name != NULL; i++) {
     if (strstr(item_name, function_map[i].name) != NULL) {
       if (check_if_in_inventory(item_name) == 1) {
+        found_item_index = i;
         function_map[i].func();
 
         if (strstr(function_map[i].type, "consumable") != NULL ||
@@ -25,117 +29,126 @@ void use_item(char *item_name) {
 void use_iron_longsword() {
   printf("You draw the iron longsword, its familiar weight a comfort as you "
          "prepare for the fray.\n");
+  replace_attack(&player, function_map[found_item_index].value);
 }
 
 void use_iron_greatsword() {
   printf("You hoist the massive iron greatsword, feeling its immense power "
          "surge through your arms.\n");
+  replace_attack(&player, function_map[found_item_index].value);
 }
 
 void use_shiv() {
   printf("You clutch the crude shiv, a desperate, last-resort weapon in the "
          "tight confines of combat.\n");
+  replace_attack(&player, function_map[found_item_index].value);
 }
 
 void use_iron_dagger() {
   printf("You unsheathe the iron dagger, nimble and swift, perfect for a "
          "precise, silent strike.\n");
+  replace_attack(&player, function_map[found_item_index].value);
 }
 
 void use_rusty_sword() {
   printf("You reluctantly grasp the heavily corroded sword, its rust flaking "
          "as you pray it holds true.\n");
+  replace_attack(&player, function_map[found_item_index].value);
 }
 
 void use_steel_mace() {
   printf("You heft the heavy steel mace, its blunt force promising to shatter "
          "any defense.\n");
+  replace_attack(&player, function_map[found_item_index].value);
 }
 
 void equip_leather_cuirass() {
   printf("You fasten the leather cuirass, its worn hide offering a basic, yet "
          "essential, layer of defense.\n");
+  add_defense(&player, function_map[found_item_index].value);
+  ;
 }
 
 void equip_fine_steel_helmet() {
   printf("You settle the fine steel helmet upon your head, its polished "
          "surface reflecting the dungeon's gloom.\n");
+  add_defense(&player, function_map[found_item_index].value);
 }
 
 void equip_prisoners_ragged_trousers() {
   printf("You pull on the prisoner's ragged trousers, surprisingly comfortable "
          "for a quick, unencumbered escape.\n");
+  add_defense(&player, function_map[found_item_index].value);
 }
 
 void equip_leather_boots() {
   printf("You slip on the leather boots, their soft soles perfect for silent "
          "movement through dark passages.\n");
+  add_defense(&player, function_map[found_item_index].value);
 }
 
 void equip_imperial_guard_shield() {
   printf("You raise the imperial guard shield, its sturdy form and proud "
          "emblem promising solid protection.\n");
+  add_defense(&player, function_map[found_item_index].value);
 }
 
 void equip_studded_leather_armor() {
   printf("You don the studded leather armor, the metal studs offering "
          "reinforced protection against blows.\n");
+  add_defense(&player, function_map[found_item_index].value);
 }
 
 void equip_wooden_shield() {
   printf("You brace yourself with the simple wooden shield, a humble barrier "
          "against the dangers ahead.\n");
+  add_defense(&player, function_map[found_item_index].value);
 }
 
 void drink_potion_of_healing() {
   printf("You uncork and drink the potion of healing, feeling a warm, "
          "restorative energy mend your wounds.\n");
+  add_health(&player, function_map[found_item_index].value);
 }
 
 void drink_minor_healing_potion() {
   printf("You quickly quaff the minor healing potion, feeling a small but "
          "welcome surge of vitality.\n");
+  add_health(&player, function_map[found_item_index].value);
 }
 
 void drink_grand_healing_potion() {
   printf("You gulp down the grand healing potion, a powerful elixir that "
          "revitalizes your very being.\n");
-}
-
-void drink_mana_potion() {
-  printf("You consume the mana potion, and a cool, invigorating energy courses "
-         "through you, replenishing your magical reserves.\n");
+  add_health(&player, function_map[found_item_index].value);
 }
 
 void apply_poison_of_weakness() {
   printf("You carefully smear the dark poison of weakness onto your blade, "
          "preparing to debilitate your next foe.\n");
+  add_attack(&player, function_map[found_item_index].value);
 }
 
 void eat_sweetroll() {
   printf("You bite into the soft, sugary sweetroll, a moment of simple "
          "pleasure that restores a touch of your vigor.\n");
+  add_health(&player, function_map[found_item_index].value);
 }
 
 void eat_moldy_bread() {
   printf("You grimace as you chew the moldy bread, barely edible but enough to "
          "stave off the worst hunger pangs.\n");
+  add_health(&player, function_map[found_item_index].value);
 }
 
 void use_welkynd_stone() {
   printf("You crush the welkynd stone in your hand, and its glowing energy "
-         "flows into you, instantly restoring your magicka.\n");
+         "flows into you.\n");
 }
 
-void use_lockpick() {
-  printf("You delicately insert the lockpick into the mechanism, listening for "
-         "the subtle clicks of the tumblers.\n");
-}
+void use_lockpick() { printf("If only there was a lock to pick.\n"); }
 
-void use_master_lockpick() {
-  printf("You confidently slide the master lockpick into the lock, "
-         "anticipating an easy bypass.\n");
-}
+void use_master_lockpick() { printf("If only there was a lock to pick.\n"); }
 
 void use_torch() {
   printf("You ignite the torch, its warm flame pushing back the oppressive "
@@ -143,8 +156,9 @@ void use_torch() {
 }
 
 void use_rusty_shovel() {
-  printf("You plunge the rusty shovel into the earth, hoping to unearth "
-         "something valuable or a hidden path.\n");
+  printf("You grip the rusty shovel with both hands, hoping it's enough to "
+         "knock someone out.\n");
+  replace_attack(&player, function_map[found_item_index].value);
 }
 
 void use_spyglass() {
@@ -236,6 +250,7 @@ void wear_silver_ring() {
 void wear_enchanted_amulet() {
   printf("You place the enchanted amulet around your neck, feeling a faint, "
          "mysterious hum against your skin.\n");
+  add_defense(&player, function_map[found_item_index].value);
 }
 
 void read_lockpicking_guide() {
@@ -249,13 +264,16 @@ void interact_waterlogged_book() {
 }
 
 void interact_empty_wine_bottle() {
-  printf("You pick up the empty wine bottle, its hollow clink echoing the last "
-         "drops of forgotten merriment.\n");
+  printf("You grab the empty wine bottle and smash it against the wall. The "
+         "jagged glass might make a decent weapon.\n");
+  add_attack(&player, function_map[found_item_index].value);
 }
 
 void interact_glowing_mushroom() {
-  printf("You examine the glowing mushroom, its ethereal luminescence casting "
-         "an eerie, soft light in the darkness.\n");
+  printf(
+      "You examine the glowing mushroom. Its ethereal light casts soft, eerie "
+      "shadows in the darkness... shame it tastes like cement powder.\n");
+  add_health(&player, function_map[found_item_index].value);
 }
 
 void interact_broken_lantern() {
@@ -276,6 +294,8 @@ FunctionMap function_map[] = {
     {"iron dagger", "weapon", 8, use_iron_dagger},
     {"rusty sword", "weapon", 7, use_rusty_sword},
     {"steel mace", "weapon", 18, use_steel_mace},
+    {"rusty shovel", "weapon", 12, use_rusty_shovel},
+    {"empty wine bottle", "weapon", 11, interact_empty_wine_bottle},
 
     // Armor
     {"leather cuirass", "armor", 12, equip_leather_cuirass},
@@ -287,21 +307,19 @@ FunctionMap function_map[] = {
     {"wooden shield", "armor", 8, equip_wooden_shield},
 
     // Consumables
-    {"potion of healing", "consumable", 0, drink_potion_of_healing},
-    {"minor healing potion", "consumable", 0, drink_minor_healing_potion},
-    {"grand healing potion", "consumable", 0, drink_grand_healing_potion},
-    {"mana potion", "consumable", 0, drink_mana_potion},
-    {"poison of weakness", "consumable", 0, apply_poison_of_weakness},
-    {"sweetroll", "consumable", 0, eat_sweetroll},
-    {"moldy bread", "consumable", 0, eat_moldy_bread},
-    {"welkynd stone", "consumable", 0, use_welkynd_stone},
-    {"glowing mushroom", "consumable", 0, interact_glowing_mushroom},
+    {"potion of healing", "consumable", 10, drink_potion_of_healing},
+    {"minor healing potion", "consumable", 5, drink_minor_healing_potion},
+    {"grand healing potion", "consumable", 20, drink_grand_healing_potion},
+    {"poison of weakness", "consumable", 5, apply_poison_of_weakness},
+    {"sweetroll", "consumable", 5, eat_sweetroll},
+    {"moldy bread", "consumable", 2, eat_moldy_bread},
+    {"welkynd stone", "consumable", 10, use_welkynd_stone},
+    {"glowing mushroom", "consumable", 3, interact_glowing_mushroom},
 
     // Tools
     {"lockpick", "tool", 0, use_lockpick},
     {"master lockpick", "tool", 0, use_master_lockpick},
     {"torch", "tool", 0, use_torch},
-    {"rusty shovel", "tool", 0, use_rusty_shovel},
     {"spyglass", "tool", 0, use_spyglass},
     {"bear trap", "tool", 0, use_bear_trap},
 
