@@ -6,6 +6,7 @@ typedef void (*func_ptr)(void);
 typedef struct {
   const char *name;
   const char *type;
+  const int value;
   func_ptr func;
 } FunctionMap;
 

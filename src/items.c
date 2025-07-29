@@ -8,7 +8,6 @@ void use_item(char *item_name) {
     if (strstr(item_name, function_map[i].name) != NULL) {
       if (check_if_in_inventory(item_name) == 1) {
         function_map[i].func();
-#include <string.h>
 
         if (strstr(function_map[i].type, "consumable") != NULL ||
             strstr(function_map[i].type, "tool") != NULL ||
@@ -271,73 +270,73 @@ void interact_lucky_rabbits_foot() {
 
 FunctionMap function_map[] = {
     // Weapons
-    {"iron longsword", "weapon", use_iron_longsword},
-    {"iron greatsword", "weapon", use_iron_greatsword},
-    {"shiv", "weapon", use_shiv},
-    {"iron dagger", "weapon", use_iron_dagger},
-    {"rusty sword", "weapon", use_rusty_sword},
-    {"steel mace", "weapon", use_steel_mace},
+    {"iron longsword", "weapon", 15, use_iron_longsword},
+    {"iron greatsword", "weapon", 20, use_iron_greatsword},
+    {"shiv", "weapon", 5, use_shiv},
+    {"iron dagger", "weapon", 8, use_iron_dagger},
+    {"rusty sword", "weapon", 7, use_rusty_sword},
+    {"steel mace", "weapon", 18, use_steel_mace},
 
     // Armor
-    {"leather cuirass", "armor", equip_leather_cuirass},
-    {"fine steel helmet", "armor", equip_fine_steel_helmet},
-    {"prisoner's ragged trousers", "armor", equip_prisoners_ragged_trousers},
-    {"leather boots", "armor", equip_leather_boots},
-    {"imperial guard shield", "armor", equip_imperial_guard_shield},
-    {"studded leather armor", "armor", equip_studded_leather_armor},
-    {"wooden shield", "armor", equip_wooden_shield},
+    {"leather cuirass", "armor", 12, equip_leather_cuirass},
+    {"fine steel helmet", "armor", 10, equip_fine_steel_helmet},
+    {"prisoner's ragged trousers", "armor", 5, equip_prisoners_ragged_trousers},
+    {"leather boots", "armor", 7, equip_leather_boots},
+    {"imperial guard shield", "armor", 20, equip_imperial_guard_shield},
+    {"studded leather armor", "armor", 15, equip_studded_leather_armor},
+    {"wooden shield", "armor", 8, equip_wooden_shield},
 
     // Consumables
-    {"potion of healing", "consumable", drink_potion_of_healing},
-    {"minor healing potion", "consumable", drink_minor_healing_potion},
-    {"grand healing potion", "consumable", drink_grand_healing_potion},
-    {"mana potion", "consumable", drink_mana_potion},
-    {"poison of weakness", "consumable", apply_poison_of_weakness},
-    {"sweetroll", "consumable", eat_sweetroll},
-    {"moldy bread", "consumable", eat_moldy_bread},
-    {"welkynd stone", "consumable", use_welkynd_stone},
-    {"glowing mushroom", "consumable", interact_glowing_mushroom},
+    {"potion of healing", "consumable", 0, drink_potion_of_healing},
+    {"minor healing potion", "consumable", 0, drink_minor_healing_potion},
+    {"grand healing potion", "consumable", 0, drink_grand_healing_potion},
+    {"mana potion", "consumable", 0, drink_mana_potion},
+    {"poison of weakness", "consumable", 0, apply_poison_of_weakness},
+    {"sweetroll", "consumable", 0, eat_sweetroll},
+    {"moldy bread", "consumable", 0, eat_moldy_bread},
+    {"welkynd stone", "consumable", 0, use_welkynd_stone},
+    {"glowing mushroom", "consumable", 0, interact_glowing_mushroom},
 
     // Tools
-    {"lockpick", "tool", use_lockpick},
-    {"master lockpick", "tool", use_master_lockpick},
-    {"torch", "tool", use_torch},
-    {"rusty shovel", "tool", use_rusty_shovel},
-    {"spyglass", "tool", use_spyglass},
-    {"bear trap", "tool", use_bear_trap},
+    {"lockpick", "tool", 0, use_lockpick},
+    {"master lockpick", "tool", 0, use_master_lockpick},
+    {"torch", "tool", 0, use_torch},
+    {"rusty shovel", "tool", 0, use_rusty_shovel},
+    {"spyglass", "tool", 0, use_spyglass},
+    {"bear trap", "tool", 0, use_bear_trap},
 
     // Scrolls
-    {"scroll of fireball", "scroll", read_scroll_of_fireball},
-    {"scroll of ice storm", "scroll", read_scroll_of_ice_storm},
-    {"scroll of fire storm", "scroll", read_scroll_of_fire_storm},
-    {"scroll of lightning bolt", "scroll", read_scroll_of_lightning_bolt},
-    {"scroll of healing hands", "scroll", read_scroll_of_healing_hands},
-    {"scroll of detect life", "scroll", read_scroll_of_detect_life},
+    {"scroll of fireball", "scroll", 0, read_scroll_of_fireball},
+    {"scroll of ice storm", "scroll", 0, read_scroll_of_ice_storm},
+    {"scroll of fire storm", "scroll", 0, read_scroll_of_fire_storm},
+    {"scroll of lightning bolt", "scroll", 0, read_scroll_of_lightning_bolt},
+    {"scroll of healing hands", "scroll", 0, read_scroll_of_healing_hands},
+    {"scroll of detect life", "scroll", 0, read_scroll_of_detect_life},
 
     // Quest Items
-    {"rusty key", "quest item", examine_rusty_key},
-    {"journal entry", "quest item", examine_journal_entry},
-    {"old map fragment", "quest item", examine_old_map_fragment},
-    {"worn leather map", "quest item", examine_worn_leather_map},
+    {"rusty key", "quest item", 0, examine_rusty_key},
+    {"journal entry", "quest item", 0, examine_journal_entry},
+    {"old map fragment", "quest item", 0, examine_old_map_fragment},
+    {"worn leather map", "quest item", 0, examine_worn_leather_map},
 
     // Currency
-    {"gold coin", "currency", pick_up_gold_coin},
-    {"bag of gold (small)", "currency", pick_up_bag_of_gold_small},
-    {"bag of gold (large)", "currency", pick_up_bag_of_gold_large},
-    {"ancient coin", "currency", pick_up_ancient_coin},
+    {"gold coin", "currency", 0, pick_up_gold_coin},
+    {"bag of gold (small)", "currency", 0, pick_up_bag_of_gold_small},
+    {"bag of gold (large)", "currency", 0, pick_up_bag_of_gold_large},
+    {"ancient coin", "currency", 0, pick_up_ancient_coin},
 
     // Jewelry
-    {"silver ring", "jewelry", wear_silver_ring},
-    {"enchanted amulet", "jewelry", wear_enchanted_amulet},
+    {"silver ring", "jewelry", 3, wear_silver_ring},
+    {"enchanted amulet", "jewelry", 7, wear_enchanted_amulet},
 
     // Book
-    {"lockpicking guide", "book", read_lockpicking_guide},
+    {"lockpicking guide", "book", 0, read_lockpicking_guide},
 
     // Miscellaneous
-    {"waterlogged book", "misc", interact_waterlogged_book},
-    {"empty wine bottle", "misc", interact_empty_wine_bottle},
-    {"broken lantern", "misc", interact_broken_lantern},
-    {"lucky rabbit's foot", "misc", interact_lucky_rabbits_foot},
+    {"waterlogged book", "misc", 0, interact_waterlogged_book},
+    {"empty wine bottle", "misc", 0, interact_empty_wine_bottle},
+    {"broken lantern", "misc", 0, interact_broken_lantern},
+    {"lucky rabbit's foot", "misc", 1, interact_lucky_rabbits_foot},
 
-    {NULL, NULL, NULL} // Null terminator
+    {NULL, NULL, 0, NULL} // Null terminator
 };
