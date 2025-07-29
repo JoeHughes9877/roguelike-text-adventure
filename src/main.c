@@ -10,14 +10,15 @@
 #include <time.h>
 
 void opening();
-void game_loop(Entity player);
+void game_loop(Entity *player);
 void delay(int number_of_seconds);
 
 char *lower_player_input(char *input);
 
+Entity player;
+
 int main() {
   set_start_room();
-  Entity player;
   player = *init_entity();
   inventory = init_inventory();
   items.name = init_items();
@@ -26,7 +27,7 @@ int main() {
   set_start_room();
   opening();
 
-  game_loop(player);
+  game_loop(&player);
 }
 
 void opening() {
@@ -64,7 +65,7 @@ void opening() {
   printf("And so, %s... what destiny will you carve from the chaos?\n", name);
 }
 
-void game_loop(Entity player) {
+void game_loop(Entity *player) {
   while (1) {
     char *player_input = get_string("What do you do? ");
 
@@ -107,7 +108,7 @@ void game_loop(Entity player) {
     } else if (strstr(player_input, "drop") != NULL) {
       remove_item_from_inventory(player_input, true);
     } else if (strstr(player_input, "stats") != NULL) {
-      check_stats(player);
+      check_stats(*player);
     } else if (strstr(player_input, "use") != NULL) {
       use_item(player_input);
     } else {
