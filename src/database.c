@@ -139,6 +139,8 @@ void generate_enemies_in_room(void) {
   sqlite3_bind_int(stmt, 1, num_of_enemies_in_room);
 
   if (num_of_enemies_in_room == 0) {
+    sqlite3_finalize(stmt);
+    sqlite3_close(DB);
     return;
   }
 
