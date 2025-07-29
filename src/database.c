@@ -138,6 +138,12 @@ void generate_enemies_in_room(void) {
 
   sqlite3_bind_int(stmt, 1, num_of_enemies_in_room);
 
+  if (num_of_enemies_in_room == 0) {
+    return;
+  }
+
+  printf("\nYou’re not alone.\n");
+
   for (int i = 0; i < num_of_enemies_in_room; i++) {
     rc = sqlite3_step(stmt);
     if (rc != SQLITE_ROW) {
