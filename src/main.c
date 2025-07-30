@@ -1,9 +1,11 @@
+#include "../include/combat.h"
 #include "../include/database.h"
 #include "../include/entity.h"
 #include "../include/inventory.h"
 #include "../include/items.h"
 #include "../include/room.h"
 #include "../include/utils.h"
+#include <bits/types/locale_t.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -111,6 +113,10 @@ void game_loop(Entity *player) {
       check_stats(*player);
     } else if (strstr(player_input, "use") != NULL) {
       use_item(player_input);
+    } else if (strstr(player_input, "attack") != NULL) {
+      if (locate_enemy(player_input) != NULL) {
+        combat_loop();
+      }
     } else {
       printf("Even the gods seem puzzled by that request.\n");
     }
