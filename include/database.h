@@ -1,6 +1,7 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include "entity.h"
 #include "vector.h"
 #include <sqlite3.h>
 
@@ -19,6 +20,11 @@ struct CurrentItemsInRoom {
 
 extern struct CurrentRoom room;
 extern struct CurrentItemsInRoom items;
+
+// #define MAX_ENEMIES_IN_ROOM 2
+
+extern int num_of_enemies_in_room;
+extern Enemy *enemies_in_room[2];
 
 // functions from get_inputs.c
 char *get_string(char *data);

@@ -22,7 +22,7 @@ extern Entity player;
 // Function declarations
 Entity *init_entity();
 
-void take_damage(Entity ent, int amount);
+void take_damage(Entity *ent, int amount);
 void add_health(Entity *ent, int amount);
 
 void drain_stamina(Entity ent, int amount);

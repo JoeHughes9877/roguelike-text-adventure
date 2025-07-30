@@ -1,6 +1,7 @@
-// utils.h
 #ifndef UTILS_H
 #define UTILS_H
+
+#include "../include/database.h"
 
 // Generates a random number between min_value and max_value (inclusive)
 int generate_random_number(int min_value, int max_value);
@@ -13,5 +14,7 @@ char *get_string(char *data);
 char *lower_player_input(char *input);
 
 int generate_random_number_bias(int min_value, int max_value, double bias);
+
+Enemy *locate_enemy(char *player_input);
 
 #endif // UTILS_H
