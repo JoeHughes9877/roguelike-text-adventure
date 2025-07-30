@@ -174,26 +174,31 @@ void use_bear_trap() {
 void read_scroll_of_fireball() {
   printf("You unfurl the scroll of fireball, and as you read its ancient "
          "words, a scorching orb of flame erupts from your hand!\n");
+  // attack_roll(&player, function_map[found_item_index].value);
 }
 
 void read_scroll_of_ice_storm() {
   printf("You recite the chilling incantation from the scroll of ice storm, "
          "summoning a tempest of razor-sharp ice shards!\n");
+  // attack_enemy(&player, function_map[found_item_index].value);
 }
 
 void read_scroll_of_fire_storm() {
   printf("You utter the devastating words from the scroll of fire storm, "
          "unleashing a cataclysmic inferno that engulfs all nearby foes!\n");
+  // attack_enemy(&player, function_map[found_item_index].value);
 }
 
 void read_scroll_of_lightning_bolt() {
   printf("You intone the crackling spell from the scroll of lightning bolt, "
          "and a focused, searing bolt of pure energy streaks forth!\n");
+  // attack_enemy(&player, function_map[found_item_index].value);
 }
 
 void read_scroll_of_healing_hands() {
   printf("You read the scroll of healing hands, and a warm, golden light "
          "emanates from your palms, mending wounds with divine grace.\n");
+  // attack_enemy(&player, function_map[found_item_index].value);
 }
 
 void read_scroll_of_detect_life() {
