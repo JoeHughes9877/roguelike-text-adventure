@@ -2,13 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void take_damage(Entity ent, int amount) {
-  if (ent.health - amount <= 0) {
-    ent.health = 0;
+void add_defense(Entity *ent, int amount) { ent->defense += amount; }
+
+void replace_attack(Entity *ent, int amount) { ent->attack = amount; }
+
+void add_attack(Entity *ent, int amount) { ent->attack += amount; }
+
+void take_damage(Entity *ent, int amount) {
+  if (ent->health - amount <= 0) {
+    ent->health = 0;
   } else {
-    ent.health -= amount;
+    ent->health -= amount;
   }
-  check_if_ded(ent);
+  check_if_ded(*ent);
 }
 
 void add_health(Entity *ent, int amount) {
@@ -34,12 +40,6 @@ void add_stamina(Entity ent, int amount) {
     ent.stamina += amount;
   }
 }
-
-void add_defense(Entity *ent, int amount) { ent->defense += amount; }
-
-void replace_attack(Entity *ent, int amount) { ent->attack = amount; }
-
-void add_attack(Entity *ent, int amount) { ent->attack += amount; }
 
 void check_stats(Entity ent) {
   printf("You assess your condition:\n\n");
@@ -74,7 +74,7 @@ Entity *init_entity() {
 
   // 30 is base for attack & stamina
   new_ent->max_health = 30;
-  new_ent->health = 1;
+  new_ent->health = new_ent->max_health;
 
   new_ent->max_stamina = 30;
   new_ent->stamina = new_ent->max_stamina;
