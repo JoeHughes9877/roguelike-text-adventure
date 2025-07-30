@@ -1,0 +1,67 @@
+#include "../include/database.h"
+#include "../include/entity.h"
+#include "../include/utils.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+
+static bool in_combat = false;
+
+// all rolls are based off a D20 dice.
+// ent_one is the attacker
+
+void attack_roll(Entity *ent_one, Enemy *ent_two) {
+  int attack_roll = generate_random_number(1, 20);
+  printf("Attacker rolled: %i", attack_roll);
+  int defence_roll = generate_random_number(1, 20);
+  printf("Defender rolled: %i", defence_roll);
+
+  int attack_success_chance = ent_one->attack + attack_roll;
+  int defence_success_chance = ent_two->base.attack + defence_roll;
+
+  if (attack_success_chance > defence_success_chance) {
+    printf("Hit!\n");
+    take_damage(&ent_two->base, ent_one->attack);
+  } else {
+    printf("Missed!\n");
+  }
+}
+
+void Flee(Entity *ent) {
+  int roll = generate_random_number(1, 20);
+  printf("Fleer Rolled: %i", roll);
+
+  int flee_success_chance = ent->stamina + roll;
+
+  // 30 is just a random number i chose will need to be changed later
+  if (flee_success_chance > 30) {
+    printf("Tactical retreat. \n");
+    in_combat = false;
+    return;
+  } else {
+    printf("Attempt unsuccessful. Now you just look like a pussy.\n");
+    return;
+  }
+}
+
+void combat_loop(char *enemy) {
+  in_combat = true;
+
+  Enemy *enemy_pointer = locate_enemy(enemy);
+
+  while (in_combat) {
+    char *player_input = get_string("What's your next move: ");
+
+    player_input = lower_player_input(player_input);
+
+    if (strstr(player_input, "attack") != NULL) {
+      attack_roll(&player, enemy_pointer);
+    } else if (strstr(player_input, "flee") != NULL) {
+      // flee()
+    } else {
+      printf("Really? You want to try that now, of all times?\n");
+    }
+  }
+
+  printf("Victorious or defeated, the battle is over.\n");
+}
