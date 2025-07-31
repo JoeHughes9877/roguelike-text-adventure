@@ -62,8 +62,7 @@ int generate_random_number_bias(int min_value, int max_value, int bias) {
 }
 
 Enemy *locate_enemy(char *player_input) {
-  int i;
-  for (i = 0; i < num_of_enemies_in_room; i++) {
+  for (int i = 0; i < num_of_enemies_in_room; i++) {
     if (strstr(player_input, (char *)enemies_in_room[i]->name) != NULL) {
       return enemies_in_room[i];
     }
