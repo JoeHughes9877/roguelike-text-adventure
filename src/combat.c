@@ -22,6 +22,8 @@ void attack_roll(Entity *ent_one, Enemy *ent_two) {
   if (attack_success_chance > defence_success_chance) {
     printf("Hit!\n");
     take_damage(&ent_two->base, ent_one->attack);
+    printf("Base attack (damage amount): %d\n", ent_one->attack);
+    printf("health is now: %i\n", ent_two->base.health);
   } else {
     printf("Missed!\n");
   }
