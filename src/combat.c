@@ -22,6 +22,10 @@ void attack_roll(Entity *ent_one, Enemy *ent_two) {
   if (attack_success_chance > defence_success_chance) {
     printf("Hit!\n");
     take_damage(&ent_two->base, ent_one->attack);
+
+    if (ent_two->base.health <= 0) {
+      in_combat = false;
+    }
     printf("Base attack (damage amount): %d\n", ent_one->attack);
     printf("health is now: %i\n", ent_two->base.health);
   } else {
@@ -52,7 +56,6 @@ void combat_loop(char *enemy) {
   Enemy *enemy_pointer = locate_enemy(enemy);
 
   if (enemy_pointer == NULL) {
-    printf("locate enemy failed.\n");
     in_combat = false;
   }
 
@@ -78,5 +81,5 @@ void combat_loop(char *enemy) {
     }
   }
 
-  printf("Victorious or defeated, the battle is over.\n");
+  printf("\nVictorious or defeated, the battle is over.\n");
 }
