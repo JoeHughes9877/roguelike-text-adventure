@@ -2,6 +2,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+void clear_enemy(Enemy *e);
 
 void add_defense(Entity *ent, int amount) { ent->defense += amount; }
 
@@ -10,8 +13,6 @@ void replace_attack(Entity *ent, int amount) { ent->attack = amount; }
 void add_attack(Entity *ent, int amount) { ent->attack += amount; }
 
 void take_damage(Entity *ent, int amount) {
-  printf("Damage dealt: %d\n", amount);
-
   if (ent->health - amount <= 0) {
     ent->health = 0;
     check_if_ded(ent);
@@ -62,7 +63,7 @@ void check_stats(Entity ent) {
 void check_if_ded(Entity *ent) {
   if (ent->health <= 0) {
     if (ent->is_player == false) {
-      free_enemy(ent->owner);
+      clear_enemy(ent->owner);
       return;
     } else {
       printf("As your life force fades, the cold grasp of Oblivion takes "
@@ -102,16 +103,25 @@ Entity *init_entity() {
 Enemy *make_enemy() {
   Enemy *enemy = malloc(sizeof(Enemy));
   enemy->base.is_player = false;
-  enemy->base.owner = &enemy;
+  enemy->base.owner = enemy;
 
   return enemy;
 }
 
-// the space is reused so it's not acctually freed just replaced.
-void free_enemy(Enemy *enemy) {
-  if (!enemy)
+void clear_enemy(Enemy *e) {
+  if (!e) {
     return;
+  }
 
-  printf("name: %s\n", enemy->name);
-  printf("desd, %s\n", enemy->description);
+  if (e->name) {
+    free(e->name);
+    e->name = NULL;
+  }
+
+  if (e->description) {
+    free(e->name);
+    e->description = NULL;
+  }
+
+  memset(e, 0, sizeof(Enemy));
 }
