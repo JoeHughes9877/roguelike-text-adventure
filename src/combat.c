@@ -41,7 +41,7 @@ void Flee(Entity *ent) {
     in_combat = false;
     return;
   } else {
-    printf("Attempt unsuccessful. Now you just look like a pussy.\n");
+    printf("Attempt unsuccessful. Now you just look's like a pussy.\n");
     return;
   }
 }
@@ -53,7 +53,16 @@ void combat_loop(char *enemy) {
 
   if (enemy_pointer == NULL) {
     printf("locate enemy failed.\n");
+    in_combat = false;
   }
+
+  printf("\nName: %s\n", enemy_pointer->name);
+  printf("--- Stats ---\n");
+  printf("Vitality : %d\n", enemy_pointer->base.health);
+  printf("Might    : %d\n", enemy_pointer->base.attack);
+  printf("Guard    : %d\n", enemy_pointer->base.defense);
+  printf("XP Bounty: %d\n", enemy_pointer->xp_reward);
+  printf("-------------\n");
 
   while (in_combat) {
     char *player_input = get_string("What's your next move: ");
