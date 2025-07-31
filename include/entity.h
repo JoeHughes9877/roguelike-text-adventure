@@ -38,7 +38,7 @@ void add_attack(Entity *ent, int amount);
 void add_defense(Entity *ent, int amount);
 void replace_attack(Entity *ent, int amount);
 
-void free_enemy(Enemy *enemy);
+void clear_enemy(Enemy *e);
 
 Enemy *make_enemy();
 #endif
