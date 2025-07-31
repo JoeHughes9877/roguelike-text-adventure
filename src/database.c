@@ -104,7 +104,7 @@ void generate_items_in_room() {
 
 void generate_enemies_in_room(void) {
   num_of_enemies_in_room =
-      generate_random_number_bias(1, 2, 0.65); // 0.7 (65% chance),
+      generate_random_number_bias(1, 3, 0.65); // 0.7 (65% chance),
 
   for (int i = 0; i < num_of_enemies_in_room; i++) {
     enemies_in_room[i] = make_enemy();
