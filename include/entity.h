@@ -11,6 +11,7 @@ typedef struct {
   int attack;
   int defense;
   bool is_player;
+  void *owner;
 } Entity;
 
 typedef struct {
@@ -26,20 +27,18 @@ extern Entity player;
 Entity *init_entity();
 
 void take_damage(Entity *ent, int amount);
-void add_health(Entity *ent, int amount);
-
 void drain_stamina(Entity ent, int amount);
-void add_stamina(Entity ent, int amount);
 
+void add_stamina(Entity ent, int amount);
 void check_stats(Entity ent);
 
 void check_if_ded(Entity *ent);
 
-void free_entity(Entity *ent);
-
 void add_attack(Entity *ent, int amount);
 void add_defense(Entity *ent, int amount);
 void replace_attack(Entity *ent, int amount);
+
+void free_enemy(Enemy *enemy);
 
 Enemy *make_enemy();
 #endif
