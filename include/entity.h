@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <stdbool.h>
+
 typedef struct {
   int health;
   int max_health;
@@ -8,6 +10,7 @@ typedef struct {
   int max_stamina;
   int attack;
   int defense;
+  bool is_player;
 } Entity;
 
 typedef struct {
@@ -30,7 +33,7 @@ void add_stamina(Entity ent, int amount);
 
 void check_stats(Entity ent);
 
-void check_if_ded(Entity ent);
+void check_if_ded(Entity *ent);
 
 void free_entity(Entity *ent);
 
