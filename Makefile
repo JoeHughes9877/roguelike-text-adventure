@@ -1,7 +1,7 @@
 CC = gcc
 
 CFLAGS = -Wall -Wextra -Wno-unused-parameter -std=c11 -pedantic -Iinclude -D_GNU_SOURCE
-
+ 
 
 LDFLAGS = -lsqlite3
 
