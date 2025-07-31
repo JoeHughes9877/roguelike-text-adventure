@@ -156,7 +156,7 @@ void generate_enemies_in_room(void) {
       columns[col] = sqlite3_column_text(stmt, col);
     }
 
-    enemies_in_room[i]->name =
+    enemies_in_room[i]->base.name =
         strdup((const char *)sqlite3_column_text(stmt, 0));
     enemies_in_room[i]->description =
         strdup((const char *)sqlite3_column_text(stmt, 1));
@@ -165,7 +165,7 @@ void generate_enemies_in_room(void) {
     enemies_in_room[i]->base.defense = sqlite3_column_int(stmt, 4);
     enemies_in_room[i]->xp_reward = sqlite3_column_int(stmt, 5);
 
-    printf("Name: %s\n", enemies_in_room[i]->name);
+    printf("Name: %s\n", enemies_in_room[i]->base.name);
     printf("Description: %s\n\n", enemies_in_room[i]->description);
   }
   sqlite3_finalize(stmt);
