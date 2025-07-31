@@ -1,4 +1,5 @@
 #include "../include/entity.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -9,12 +10,19 @@ void replace_attack(Entity *ent, int amount) { ent->attack = amount; }
 void add_attack(Entity *ent, int amount) { ent->attack += amount; }
 
 void take_damage(Entity *ent, int amount) {
+  printf("Damage dealt: %d\n", amount);
+
   if (ent->health - amount <= 0) {
     ent->health = 0;
+    check_if_ded(ent);
   } else {
     ent->health -= amount;
   }
-  check_if_ded(*ent);
+
+  if (ent->health < 0 || ent->health > 1000) {
+    printf("WARNING: Health corruption detected: %d\n", ent->health);
+    ent->health = 0; // clamp
+  }
 }
 
 void add_health(Entity *ent, int amount) {
@@ -53,17 +61,23 @@ void check_stats(Entity ent) {
 }
 
 // player death currently, will end game on any death including enemy
-void check_if_ded(Entity ent) {
-  if (ent.health <= 0) {
-    printf(
-        "As your life force fades, the cold grasp of Oblivion takes hold...\n");
-    printf("You have succumbed to the darkness that lurks beyond Tamriel.\n");
-    printf("May your soul find peace in the afterlife. Farewell, brave "
-           "adventurer.\n");
-
-    free_entity(&ent);
-    exit(0);
+void check_if_ded(Entity *ent) {
+  if (ent->health <= 0) {
+    if (!ent->is_player) {
+      free_entity(ent);
+      return;
+    } else {
+      printf("As your life force fades, the cold grasp of Oblivion takes "
+             "hold...\n");
+      printf("You have succumbed to the darkness that lurks beyond Tamriel.\n");
+      printf("May your soul find peace in the afterlife. Farewell, brave "
+             "adventurer.\n");
+      free_entity(ent);
+      exit(0);
+      return;
+    }
   }
+  return;
 }
 
 Entity *init_entity() {
@@ -82,11 +96,15 @@ Entity *init_entity() {
   new_ent->defense = 10; // base defence
   new_ent->attack = 10;  // base damage
 
+  new_ent->is_player = true;
+
   return new_ent;
 }
 
 Enemy *make_enemy() {
   Enemy *enemy = malloc(sizeof(Enemy));
+
+  enemy->base.is_player = false;
 
   return enemy;
 }
