@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 typedef struct {
+  char *name;
   int health;
   int max_health;
   int stamina;
@@ -16,7 +17,6 @@ typedef struct {
 
 typedef struct {
   Entity base;
-  char *name;
   char *description;
   int xp_reward;
 } Enemy;
@@ -29,6 +29,7 @@ Entity *init_entity();
 void take_damage(Entity *ent, int amount);
 void drain_stamina(Entity ent, int amount);
 
+void add_health(Entity *ent, int amount);
 void add_stamina(Entity ent, int amount);
 void check_stats(Entity ent);
 
