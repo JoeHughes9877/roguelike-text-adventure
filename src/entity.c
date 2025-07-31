@@ -69,7 +69,7 @@ void check_if_ded(Entity *ent) {
       printf("As your life force fades, the cold grasp of Oblivion takes "
              "hold...\n");
       printf("You have succumbed to the darkness that lurks beyond Tamriel.\n");
-      printf("May your soul find peace in the afterlife. Farewell, %s.",
+      printf("May your soul find peace in the afterlife. Farewell, %s.\n",
              player.name);
       exit(0);
       return;
