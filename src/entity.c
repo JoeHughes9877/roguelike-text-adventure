@@ -69,8 +69,8 @@ void check_if_ded(Entity *ent) {
       printf("As your life force fades, the cold grasp of Oblivion takes "
              "hold...\n");
       printf("You have succumbed to the darkness that lurks beyond Tamriel.\n");
-      printf("May your soul find peace in the afterlife. Farewell, brave "
-             "adventurer.\n");
+      printf("May your soul find peace in the afterlife. Farewell, %s.",
+             player.name);
       exit(0);
       return;
     }
@@ -97,6 +97,8 @@ Entity *init_entity() {
   new_ent->is_player = true;
   new_ent->owner = new_ent;
 
+  player.name = "Dave."; // default name
+
   return new_ent;
 }
 
@@ -113,13 +115,13 @@ void clear_enemy(Enemy *e) {
     return;
   }
 
-  if (e->name) {
-    free(e->name);
-    e->name = NULL;
+  if (e->base.name) {
+    free(e->base.name);
+    e->base.name = NULL;
   }
 
   if (e->description) {
-    free(e->name);
+    free(e->base.name);
     e->description = NULL;
   }
 
