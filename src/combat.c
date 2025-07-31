@@ -7,27 +7,29 @@
 
 static bool in_combat = false;
 
+void enemy_turn(Entity *player, Enemy *enemy);
+
 // all rolls are based off a D20 dice.
 // ent_one is the attacker
 
-void attack_roll(Entity *ent_one, Enemy *ent_two) {
+void attack_roll(Entity *ent_one, Entity *ent_two) {
   int attack_roll = generate_random_number(1, 20);
   printf("Attacker rolled: %i\n", attack_roll);
   int defence_roll = generate_random_number(1, 20);
   printf("Defender rolled: %i\n", defence_roll);
 
   int attack_success_chance = ent_one->attack + attack_roll;
-  int defence_success_chance = ent_two->base.attack + defence_roll;
+  int defence_success_chance = ent_two->attack + defence_roll;
 
   if (attack_success_chance > defence_success_chance) {
     printf("Hit!\n");
-    take_damage(&ent_two->base, ent_one->attack);
+    take_damage(ent_two, ent_one->attack);
 
-    if (ent_two->base.health <= 0) {
+    if (ent_two->health <= 0) {
       in_combat = false;
     }
     printf("Base attack (damage amount): %d\n", ent_one->attack);
-    printf("health is now: %i\n", ent_two->base.health);
+    printf("health is now: %i\n", ent_two->health);
   } else {
     printf("Missed!\n");
   }
@@ -45,7 +47,7 @@ void Flee(Entity *ent) {
     in_combat = false;
     return;
   } else {
-    printf("Attempt unsuccessful. Now you just look like a pussy.\n");
+    printf("Attempt unsuccessful. What a pussy.\n");
     return;
   }
 }
@@ -68,18 +70,30 @@ void combat_loop(char *enemy) {
   printf("-------------\n");
 
   while (in_combat) {
+    printf("-----your turn-----\n");
     char *player_input = get_string("What's your next move: ");
 
     player_input = lower_player_input(player_input);
 
     if (strstr(player_input, "attack") != NULL) {
-      attack_roll(&player, enemy_pointer);
+      attack_roll(&player, &enemy_pointer->base);
     } else if (strstr(player_input, "flee") != NULL) {
       Flee(&player);
     } else {
       printf("Really? You want to try that now, of all times?\n");
     }
+    printf("-------------------\n");
+    enemy_turn(&player, enemy_pointer);
   }
-
   printf("\nVictorious or defeated, the battle is over.\n");
+}
+
+void enemy_turn(Entity *player, Enemy *enemy) {
+  printf("----enemy turn-----\n");
+  if (enemy->base.health < enemy->base.health * 0.20) {
+    Flee(&enemy->base);
+  } else {
+    attack_roll(&enemy->base, player);
+  }
+  printf("-------------------\n");
 }
