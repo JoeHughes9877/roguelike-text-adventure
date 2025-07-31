@@ -57,14 +57,12 @@ void opening() {
   getchar(); // Waits for the user to press Enter
 
   printf("\nThe threads of fate coil tighter around you...\n");
-  char name[100];
-  printf(
+  player.name = get_string(
       "But before your tale unfolds — tell me, traveler: what is your name? ");
-  fgets(name, sizeof(name), stdin);
-  name[strcspn(name, "\n")] = '\0'; // Remove trailing newline
 
   printf("\nFreedom clings to your skin like the chill of the crypt.\n");
-  printf("And so, %s... what destiny will you carve from the chaos?\n", name);
+  printf("And so, %s... what destiny will you carve from the chaos?\n",
+         player.name);
 }
 
 void game_loop(Entity *player) {
