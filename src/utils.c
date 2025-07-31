@@ -35,6 +35,7 @@ char *get_string(char *data) {
       buffer = realloc(buffer, current_length + 50);
     }
     if (buffer[current_length - 1] == '\n') {
+      buffer[strcspn(buffer, "\n")] = 0;
       break;
     }
   }
@@ -63,7 +64,7 @@ int generate_random_number_bias(int min_value, int max_value, int bias) {
 
 Enemy *locate_enemy(char *player_input) {
   for (int i = 0; i < num_of_enemies_in_room; i++) {
-    if (strstr(player_input, (char *)enemies_in_room[i]->name) != NULL) {
+    if (strstr(player_input, (char *)enemies_in_room[i]->base.name) != NULL) {
       return enemies_in_room[i];
     }
   }
