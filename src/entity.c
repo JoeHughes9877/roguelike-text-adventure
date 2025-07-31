@@ -20,7 +20,6 @@ void take_damage(Entity *ent, int amount) {
   }
 
   if (ent->health < 0 || ent->health > 1000) {
-    printf("WARNING: Health corruption detected: %d\n", ent->health);
     ent->health = 0; // clamp
   }
 }
@@ -60,11 +59,10 @@ void check_stats(Entity ent) {
   printf("===========\n\n");
 }
 
-// player death currently, will end game on any death including enemy
 void check_if_ded(Entity *ent) {
   if (ent->health <= 0) {
-    if (!ent->is_player) {
-      free_entity(ent);
+    if (ent->is_player == false) {
+      free_enemy(ent->owner);
       return;
     } else {
       printf("As your life force fades, the cold grasp of Oblivion takes "
@@ -72,7 +70,6 @@ void check_if_ded(Entity *ent) {
       printf("You have succumbed to the darkness that lurks beyond Tamriel.\n");
       printf("May your soul find peace in the afterlife. Farewell, brave "
              "adventurer.\n");
-      free_entity(ent);
       exit(0);
       return;
     }
@@ -97,16 +94,24 @@ Entity *init_entity() {
   new_ent->attack = 10;  // base damage
 
   new_ent->is_player = true;
+  new_ent->owner = new_ent;
 
   return new_ent;
 }
 
 Enemy *make_enemy() {
   Enemy *enemy = malloc(sizeof(Enemy));
-
   enemy->base.is_player = false;
+  enemy->base.owner = &enemy;
 
   return enemy;
 }
 
-void free_entity(Entity *ent) { free(ent); }
+// the space is reused so it's not acctually freed just replaced.
+void free_enemy(Enemy *enemy) {
+  if (!enemy)
+    return;
+
+  printf("name: %s\n", enemy->name);
+  printf("desd, %s\n", enemy->description);
+}
