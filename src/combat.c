@@ -35,17 +35,17 @@ void attack_roll(Entity *ent_one, Enemy *ent_two) {
 
 void Flee(Entity *ent) {
   int roll = generate_random_number(1, 20);
-  printf("Fleer Rolled: %i", roll);
+  printf("Fleer Rolled: %i\n", roll);
 
   int flee_success_chance = ent->stamina + roll;
 
   // 30 is just a random number i chose will need to be changed later
-  if (flee_success_chance > 30) {
+  if (flee_success_chance > 110) {
     printf("Tactical retreat. \n");
     in_combat = false;
     return;
   } else {
-    printf("Attempt unsuccessful. Now you just look's like a pussy.\n");
+    printf("Attempt unsuccessful. Now you just look like a pussy.\n");
     return;
   }
 }
@@ -75,7 +75,7 @@ void combat_loop(char *enemy) {
     if (strstr(player_input, "attack") != NULL) {
       attack_roll(&player, enemy_pointer);
     } else if (strstr(player_input, "flee") != NULL) {
-      // flee()
+      Flee(&player);
     } else {
       printf("Really? You want to try that now, of all times?\n");
     }
