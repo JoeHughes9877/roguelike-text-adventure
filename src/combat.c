@@ -12,9 +12,9 @@ static bool in_combat = false;
 
 void attack_roll(Entity *ent_one, Enemy *ent_two) {
   int attack_roll = generate_random_number(1, 20);
-  printf("Attacker rolled: %i", attack_roll);
+  printf("Attacker rolled: %i\n", attack_roll);
   int defence_roll = generate_random_number(1, 20);
-  printf("Defender rolled: %i", defence_roll);
+  printf("Defender rolled: %i\n", defence_roll);
 
   int attack_success_chance = ent_one->attack + attack_roll;
   int defence_success_chance = ent_two->base.attack + defence_roll;
@@ -48,6 +48,10 @@ void combat_loop(char *enemy) {
   in_combat = true;
 
   Enemy *enemy_pointer = locate_enemy(enemy);
+
+  if (enemy_pointer == NULL) {
+    printf("locate enemy failed.\n");
+  }
 
   while (in_combat) {
     char *player_input = get_string("What's your next move: ");
