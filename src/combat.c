@@ -1,20 +1,22 @@
 #include "../include/database.h"
 #include "../include/entity.h"
+#include "../include/items.h"
 #include "../include/utils.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
-static bool in_combat = false;
+bool in_combat = false;
+Enemy *enemy_pointer = NULL;
 
 void enemy_turn(Entity *player, Enemy *enemy);
 
-void attack_roll(Entity *ent_one, Entity *ent_two) {
+void attack_roll(Entity *ent_one, Entity *ent_two, int damage) {
   int attack_roll = generate_random_number(1, 20);
   int defence_roll = generate_random_number(1, 20);
 
-  int attack_success_chance = ent_one->attack + attack_roll;
-  int defence_success_chance = ent_two->attack + defence_roll;
+  int attack_success_chance = damage + attack_roll;
+  int defence_success_chance = ent_two->defense + defence_roll;
 
   printf("\n-- Combat Roll --\n");
   printf("Attacker (%s) rolled: %d (Total: %d)\n", ent_one->name, attack_roll,
@@ -23,9 +25,9 @@ void attack_roll(Entity *ent_one, Entity *ent_two) {
          defence_success_chance);
 
   if (attack_success_chance > defence_success_chance) {
-    printf("=> HIT! %s deals %d damage to %s!\n", ent_one->name,
-           ent_one->attack, ent_two->name);
-    take_damage(ent_two, ent_one->attack);
+    printf("=> HIT! %s deals %d damage to %s!\n", ent_one->name, damage,
+           ent_two->name);
+    take_damage(ent_two, damage);
     printf("%s's health is now: %d\n", ent_two->name, ent_two->health);
 
     if (ent_two->health <= 0) {
@@ -57,7 +59,7 @@ void Flee(Entity *ent) {
 void combat_loop(char *enemy) {
   in_combat = true;
 
-  Enemy *enemy_pointer = locate_enemy(enemy);
+  enemy_pointer = locate_enemy(enemy);
   if (enemy_pointer == NULL) {
     printf("No such enemy found.\n");
     in_combat = false;
@@ -78,11 +80,13 @@ void combat_loop(char *enemy) {
     player_input = lower_player_input(player_input);
 
     if (strstr(player_input, "attack") != NULL) {
-      attack_roll(&player, &enemy_pointer->base);
+      attack_roll(&player, &enemy_pointer->base, player.attack);
     } else if (strstr(player_input, "flee") != NULL) {
       Flee(&player);
+    } else if (strstr(player_input, "use") != NULL) {
+      use_item(player_input);
     } else {
-      printf("Invalid move. Try something more reasonable.\n");
+      printf("Really you want to try that now?.\n");
     }
 
     if (in_combat) {
@@ -100,7 +104,7 @@ void enemy_turn(Entity *player, Enemy *enemy) {
     printf("%s looks injured and tries to flee!\n", enemy->base.name);
     Flee(&enemy->base);
   } else {
-    attack_roll(&enemy->base, player);
+    attack_roll(&enemy->base, player, enemy->base.attack);
   }
 
   printf("-------------------\n");
