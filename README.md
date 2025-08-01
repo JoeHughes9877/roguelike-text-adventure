@@ -67,10 +67,3 @@ The game uses SQLite to manage persistent data with the following key tables:
 - **room_template_enemies** — Maps which enemies appear in which room templates.
 
 This schema supports dynamic room creation with variable items and enemies to enrich gameplay.
-
----
-
-## 🗂 Project Structure
-
-<pre markdown="1"> ```plaintext Text-Based-RPG-Engine/ ├── data/ │ ├── database.db │ └── schema.sql ├── game/ ├── include/ │ ├── combat.h │ ├── database.h │ ├── entity.h │ ├── inventory.h │ ├── items.h │ ├── room.h │ ├── utils.h │ └── vector.h ├── obj/ ├── src/ │ ├── combat.c │ ├── database.c │ ├── entity.c │ ├── inventory.c │ ├── items.c │ ├── room.c │ ├── utils.c │ └── vector.c ├── LICENSE ├── Makefile └── README.md ``` </pre>    
-
