@@ -1,4 +1,5 @@
 #include "../include/entity.h"
+#include "../include/database.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -132,4 +133,16 @@ void clear_enemy(Enemy *e) {
   }
 
   memset(e, 0, sizeof(Enemy));
+}
+
+void print_enemy_stats_in_room() {
+  for (int i = 0; i < num_of_enemies_in_room; i++) {
+    printf("Name: %s\n", enemies_in_room[i]->base.name);
+    printf("===stats===\n");
+    printf("Defense: %i\n", enemies_in_room[i]->base.defense);
+    printf("Attack: %i\n", enemies_in_room[i]->base.attack);
+    printf("Health: %i\n", enemies_in_room[i]->base.health);
+    printf("Stamina: %i\n", enemies_in_room[i]->base.stamina);
+    printf("===========\n\n");
+  }
 }
