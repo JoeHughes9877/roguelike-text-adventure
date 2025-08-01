@@ -111,7 +111,7 @@ void game_loop(Entity *player) {
       check_stats(*player);
     } else if (strstr(player_input, "use") != NULL) {
       use_item(player_input);
-    } else if (strstr(player_input, "attack") != NULL) {
+    } else if (strstr(player_input, "engage") != NULL) {
       if (locate_enemy(player_input) != NULL) {
         combat_loop();
       }
