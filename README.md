@@ -7,6 +7,21 @@ Inspired by classic text adventures and *The Elder Scrolls*, this engine lets yo
 
 The game is in a **playable state**, although occasional crashes might occur as it’s still a work-in-progress.
 
+## 🚀 How to Run the Game
+
+### Prerequisites
+Ensure you have these installed:
+- GCC
+- Make
+- SQLite3
+
+### Quick Start
+```bash
+git clone https://github.com/yourusername/Text-Based-RPG-Engine.git
+cd Text-Based-RPG-Engine
+make
+./game
+
 ---
 
 ## 🎮 Game Controls
@@ -59,35 +74,29 @@ This schema supports dynamic room creation with variable items and enemies to en
 
 Text-Based-RPG-Engine/
 ├── data/
-│ ├── database.db # SQLite database file
-│ └── schema.sql # SQL schema for database setup
-├── game/ # Compiled game executable and assets
-├── include/ # Header files for game modules
-│ ├── combat.h
-│ ├── database.h
-│ ├── entity.h
-│ ├── inventory.h
-│ ├── items.h
-│ ├── room.h
-│ ├── utils.h
-│ └── vector.h
-├── obj/ # Compiled object files (build artifacts)
-├── src/ # Source code files (C implementation)
-│ ├── combat.c
-│ ├── database.c
-│ ├── entity.c
-│ ├── inventory.c
-│ ├── items.c
-│ ├── room.c
-│ ├── utils.c
-│ └── vector.c
-├── LICENSE # MIT license file
-├── Makefile # Build script for compiling the game
-└── README.md # This documentation file
-
----
-make
-./game
-
----
+│   ├── database.db    
+│   └── schema.sql      
+├── game/            
+├── include/      
+│   ├── combat.h
+│   ├── database.h
+│   ├── entity.h
+│   ├── inventory.h
+│   ├── items.h
+│   ├── room.h
+│   ├── utils.h
+│   └── vector.h
+├── obj/               
+├── src/              
+│   ├── combat.c
+│   ├── database.c
+│   ├── entity.c
+│   ├── inventory.c
+│   ├── items.c
+│   ├── room.c
+│   ├── utils.c
+│   └── vector.c
+├── LICENSE         
+├── Makefile            
+└── README.md      
 
