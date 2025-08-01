@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS enemy_definitions (
     base_health INTEGER NOT NULL,
     base_attack INTEGER NOT NULL,
     base_defense INTEGER NOT NULL,
-    xp_reward INTEGER DEFAULT 0
+    xp_reward INTEGER DEFAULT 0,
+    base_stamina INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS room_template_items (
@@ -194,26 +195,25 @@ INSERT INTO item_definitions (name, description, value) VALUES
 
 
 
--- Inserts for enemy_definitions
-INSERT INTO enemy_definitions (name, description, base_health, base_attack, base_defense, xp_reward) VALUES
-('bandit', 'a common highwayman, clad in leather and wielding a crude weapon.', 30, 8, 5, 15),
-('scamp', 'a small, mischievous daedra from oblivion, prone to cackling.', 20, 5, 3, 10),
-('zombie', 'the reanimated corpse of a fallen adventurer, slow but relentless.', 40, 7, 6, 20),
-('wolf', 'a wild canine, aggressive and territorial.', 25, 6, 4, 12),
-('clannfear', 'a reptilian daedra with a sharp frill and powerful claws.', 50, 12, 8, 30),
-('skeleton', 'the skeletal remains of a warrior, animated by dark magic.', 35, 9, 7, 18),
-('goblin', 'a small, green-skinned creature known for its tribal behavior and crude weapons.', 28, 7, 4, 14),
-('ogre', 'a large, brutish creature with immense strength and thick hide.', 80, 15, 10, 50),
-('dremora kynval', 'a lesser daedra, but still a formidable warrior from mehrunes dagon''s legions.', 60, 10, 9, 40),
-('imperial guard', 'a disciplined soldier of the imperial legion, armed with steel.', 45, 10, 8, 25),
-('dungeon rat', 'a large, aggressive rat, common in the dark corners of the dungeon.', 15, 4, 2, 5),
-('feral dog', 'a starving, wild dog that has found its way into the dungeon.', 22, 5, 3, 8),
-('ghostly apparition', 'a translucent, ethereal spirit of a former prisoner or guard.', 30, 7, 5, 20),
-('fallen imperial mage', 'the reanimated corpse of an imperial battlemage, still crackling with dark energy.', 55, 11, 7, 35),
-('giant spider', 'a monstrous arachnid, its web-filled lair suggests a dangerous encounter.', 38, 9, 6, 22),
-('hungry prisoner', 'a desperate, emaciated prisoner, driven to violence by starvation.', 25, 6, 4, 10),
-('sewer croc', 'a large, aggressive crocodile dwelling in the dungeon''s murky waters.', 42, 10, 7, 28),
-('corrupted sentry', 'an ancient ayleid construct, now corrupted and hostile.', 65, 13, 11, 45);
+INSERT INTO enemy_definitions (name, description, base_health, base_attack, base_defense, xp_reward, base_stamina) VALUES
+('bandit', 'a common highwayman, clad in leather and wielding a crude weapon.', 30, 8, 5, 15, 12),
+('scamp', 'a small, mischievous daedra from oblivion, prone to cackling.', 20, 5, 3, 10, 15),
+('zombie', 'the reanimated corpse of a fallen adventurer, slow but relentless.', 40, 7, 6, 20, 5),
+('wolf', 'a wild canine, aggressive and territorial.', 25, 6, 4, 12, 14),
+('clannfear', 'a reptilian daedra with a sharp frill and powerful claws.', 50, 12, 8, 30, 16),
+('skeleton', 'the skeletal remains of a warrior, animated by dark magic.', 35, 9, 7, 18, 10),
+('goblin', 'a small, green-skinned creature known for its tribal behavior and crude weapons.', 28, 7, 4, 14, 13),
+('ogre', 'a large, brutish creature with immense strength and thick hide.', 80, 15, 10, 50, 6),
+('dremora kynval', 'a lesser daedra, but still a formidable warrior from mehrunes dagon''s legions.', 60, 10, 9, 40, 12),
+('imperial guard', 'a disciplined soldier of the imperial legion, armed with steel.', 45, 10, 8, 25, 11),
+('dungeon rat', 'a large, aggressive rat, common in the dark corners of the dungeon.', 15, 4, 2, 5, 14),
+('feral dog', 'a starving, wild dog that has found its way into the dungeon.', 22, 5, 3, 8, 13),
+('ghostly apparition', 'a translucent, ethereal spirit of a former prisoner or guard.', 30, 7, 5, 20, 9),
+('fallen imperial mage', 'the reanimated corpse of an imperial battlemage, still crackling with dark energy.', 55, 11, 7, 35, 10),
+('giant spider', 'a monstrous arachnid, its web-filled lair suggests a dangerous encounter.', 38, 9, 6, 22, 12),
+('hungry prisoner', 'a desperate, emaciated prisoner, driven to violence by starvation.', 25, 6, 4, 10, 8),
+('sewer croc', 'a large, aggressive crocodile dwelling in the dungeon''s murky waters.', 42, 10, 7, 28, 9),
+('corrupted sentry', 'an ancient ayleid construct, now corrupted and hostile.', 65, 13, 11, 45, 7);
 
 
 -- Inserts for room_template_enemies (linking enemies to room templates)
