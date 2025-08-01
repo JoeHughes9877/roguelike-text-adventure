@@ -85,7 +85,9 @@ Text-Based-RPG-Engine/
 ├── Makefile # Build script for compiling the game
 └── README.md # This documentation file
 
+---
 make
 ./game
 
+---
 
