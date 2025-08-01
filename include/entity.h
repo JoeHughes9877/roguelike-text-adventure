@@ -41,5 +41,7 @@ void replace_attack(Entity *ent, int amount);
 
 void clear_enemy(Enemy *e);
 
+void print_enemy_stats_in_room();
+
 Enemy *make_enemy();
 #endif
