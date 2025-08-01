@@ -22,7 +22,7 @@ cd Text-Based-RPG-Engine
 make
 ./game
 
----
+```
 
 ## 🎮 Game Controls
 
