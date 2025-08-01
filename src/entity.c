@@ -10,7 +10,13 @@ void add_defense(Entity *ent, int amount) { ent->defense += amount; }
 
 void replace_attack(Entity *ent, int amount) { ent->attack = amount; }
 
-void add_attack(Entity *ent, int amount) { ent->attack += amount; }
+void add_attack(Entity *ent, int amount) {
+  if (!ent) {
+    fprintf(stderr, "ERROR: add_attack() received NULL Entity pointer!\n");
+    return;
+  }
+  ent->attack += amount;
+}
 
 void take_damage(Entity *ent, int amount) {
   if (ent->health - amount <= 0) {
