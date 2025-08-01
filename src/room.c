@@ -53,8 +53,8 @@ void set_start_room() {
 void remove_item_from_room(char *item) {
   for (int i = 0; i < items.num_items_in_room; i++) {
     if (strcmp(items.name->elements[i], item) == 0) {
-      items.name = delete_by_index(items.name, i);
-      items.description = delete_by_index(items.description, i);
+      delete_by_index(items.name, i);
+      delete_by_index(items.description, i);
 
       items.num_items_in_room--;
       return;
@@ -118,4 +118,25 @@ char *get_opposite(char *dir) {
     }
   }
   return NULL;
+}
+
+void destroy_room_contents() {
+
+  if (items.name != NULL) {
+    for (int i = 0; i < items.num_items_in_room; i++) {
+      free(items.name->elements[i]);
+    }
+    free(items.name);
+    items.name = NULL;
+  }
+
+  if (items.description != NULL) {
+    for (int i = 0; i < items.num_items_in_room; i++) {
+      free(items.description->elements[i]);
+    }
+    free(items.description);
+    items.description = NULL;
+  }
+
+  items.num_items_in_room = 0;
 }
