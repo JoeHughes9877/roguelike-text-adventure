@@ -1,73 +1,69 @@
-# Text-Based RPG Engine in C
+# Text-Based Adventure Game
 
-The game is in a playable state although does occasionally crash, changes still being made.
+## Overview
 
-A dynamically generated text adventure game engine written in C with SQLite persistence.
+A lightweight and modular role-playing game built in C using SQLite for persistent game data management.  
+Inspired by classic text adventures and *The Elder Scrolls*, this engine lets you explore dynamically generated rooms, interact with items and engage enemies.
 
-## 🚀 Features
+The game is in a **playable state**, although occasional crashes might occur as it’s still a work-in-progress.
 
-- ✨ **Procedural World Generation** – Unique rooms created from templates  
-- 🗃️ **SQLite Database** – Save games, items, and world state  
-- ⚔️ **Turn-Based Combat** – Battle enemies with stats and equipment  
-- 🎒 **Inventory System** – Collect and use items  
-- 📜 **Rich Descriptions** – Dynamically generated room narratives  
-- 🔧 **Modular Design** – Easy to extend with new features  
+## 🚀 How to Run the Game
 
-## 🧪 Quick Start
+### Prerequisites
+Ensure you have these installed:
+- GCC
+- Make
+- SQLite3
 
-### Requirements
-
-- GCC or Clang  
-- SQLite3 development libraries  
-- GNU Make (optional)
-
-### Installation
-
+### Quick Start
 ```bash
-# Clone and build
-git clone https://github.com/yourusername/text-rpg-engine.git
-cd text-rpg-engine
+git clone https://github.com/yourusername/Text-Based-RPG-Engine.git
+cd Text-Based-RPG-Engine
 make
-
-# Run the game
-./rpg
-```
-
-## 🎮 Game Commands
-
-| Command         | Description                   |
-|-----------------|-------------------------------|
-| `go [direction]`| Move (north/south/east/west)  |
-| `look around`   | Examine current room          |
-| `take [item]`   | Pick up an item               |
-| `use [item]`    | Use an item from inventory    |
-| `attack`        | Fight nearby enemies          |
-| `inventory`     | View your items               |
-| `stats`         | check player stats (health)   |
-
-
-## 🗂️ Project Structure
+./game
 
 ```
-text-rpg-engine/
-├── src/               # Source files
-│   ├── main.c         # Game loop and entry point
-│   ├── world.c        # Room generation and navigation  
-│   ├── combat.c       # Battle system
-│   ├── items.c        # Inventory management
-│   └── db.c           # SQLite database interface
-├── include/           # Header files
-├── data/              # Game assets and database
-├── Makefile           # Build configuration
-└── README.md          # This file
-```
 
-## 🗃️ Database Schema
+## 🎮 Game Controls
 
-The SQLite database contains the following tables:
+| Command           | Description                                  |
+|-------------------|-------------------------------------         |
+| `go north`        | Move your character north                    |
+| `go east`         | Move east                                    |
+| `go south`        | Move south                                   |
+| `go west`         | Move west                                    |
+| `look around`     | Examine the current room for items and exits |
+| `inventory`       | List the items you are carrying              |
+| `take <item>`     | Pick up an item from the room                |
+| `drop <item>`     | Drop an item from your inventory             |
+| `use <item>`      | Use an item in your inventory                |
+| `stats`           | View your current player stats               |
+| `engage <enemy>`  | Initiate combat with an enemy in the room    |
+| `attack`          | cause damage to an enemy                     |
+| `flee`            | attemp to flee from combat                   |
 
-- `rooms` – Generated room instances  
-- `templates` – Room blueprints for generation  
-- `items` – All game items  
-- `players` – Save game data  
-- `world` – Global game state  
+---
+
+## 💡 Things I Have Learned
+
+- Designing a modular game architecture in C with separation of concerns.
+- Managing dynamic memory safely in C for strings and custom vector structures.
+- Utilizing SQLite to store and query game data such as rooms, items, and enemies.
+- Implementing game loops with text parsing for flexible player input.
+- Handling dynamic room generation with exits and inventory mechanics.
+- Using Makefiles for compiling multi-file C projects efficiently.
+- Employing string manipulation and case normalization to handle user commands robustly.
+
+---
+
+## 📄 SQLite Database Schema (Summary)
+
+The game uses SQLite to manage persistent data with the following key tables:
+
+- **room_templates** — Defines room prefixes, core names, base descriptions, and optional features.
+- **item_definitions** — Stores all possible items with names, descriptions, and values.
+- **enemy_definitions** — Contains enemy stats including health, attack, defense, and XP rewards.
+- **room_template_items** — Maps which items appear in which room templates.
+- **room_template_enemies** — Maps which enemies appear in which room templates.
+
+This schema supports dynamic room creation with variable items and enemies to enrich gameplay.
