@@ -1,5 +1,6 @@
 #include "../include/database.h"
 #include "../include/entity.h"
+#include "../include/room.h"
 #include "../include/utils.h"
 #include "../include/vector.h"
 #include <sqlite3.h>
@@ -51,6 +52,11 @@ void generate_room() {
 }
 
 void generate_items_in_room() {
+  destroy_room_contents();
+
+  items.name = init_items();
+  items.description = init_items();
+
   items.num_items_in_room = generate_random_number(0, 4);
 
   items.name->size = items.num_items_in_room;
