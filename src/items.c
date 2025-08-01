@@ -227,6 +227,8 @@ void read_scroll_of_detect_life() {
   printf("You read the scroll of detect life, and a faint, ethereal aura "
          "spreads, "
          "revealing the hidden presences of living creatures nearby.\n");
+
+  print_enemy_stats_in_room();
 }
 
 void examine_rusty_key() {
