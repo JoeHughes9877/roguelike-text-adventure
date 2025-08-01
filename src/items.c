@@ -1,4 +1,5 @@
 #include "../include/items.h"
+#include "../include/combat.h"
 #include "../include/entity.h"
 #include "../include/inventory.h"
 #include <stdio.h>
@@ -174,25 +175,46 @@ void use_bear_trap() {
 void read_scroll_of_fireball() {
   printf("You unfurl the scroll of fireball, and as you read its ancient "
          "words, a scorching orb of flame erupts from your hand!\n");
-  // attack_roll(&player, function_map[found_item_index].value);
+  if (in_combat) {
+    printf("%s", enemy_pointer->base.name);
+    attack_roll(&player, &enemy_pointer->base,
+                function_map[found_item_index].value);
+  } else {
+    printf("and it hits the wall doing nothing...\n");
+  }
 }
 
 void read_scroll_of_ice_storm() {
   printf("You recite the chilling incantation from the scroll of ice storm, "
          "summoning a tempest of razor-sharp ice shards!\n");
-  // attack_enemy(&player, function_map[found_item_index].value);
+  if (in_combat) {
+    attack_roll(&player, &enemy_pointer->base,
+                function_map[found_item_index].value);
+  } else {
+    printf("and it hits the wall doing nothing...\n");
+  }
 }
 
 void read_scroll_of_fire_storm() {
   printf("You utter the devastating words from the scroll of fire storm, "
          "unleashing a cataclysmic inferno that engulfs all nearby foes!\n");
-  // attack_enemy(&player, function_map[found_item_index].value);
+  if (in_combat) {
+    attack_roll(&player, &enemy_pointer->base,
+                function_map[found_item_index].value);
+  } else {
+    printf("and it hits the wall doing nothing...\n");
+  }
 }
 
 void read_scroll_of_lightning_bolt() {
   printf("You intone the crackling spell from the scroll of lightning bolt, "
          "and a focused, searing bolt of pure energy streaks forth!\n");
-  // attack_enemy(&player, function_map[found_item_index].value);
+  if (in_combat) {
+    attack_roll(&player, &enemy_pointer->base,
+                function_map[found_item_index].value);
+  } else {
+    printf("and it hits the wall doing nothing...\n");
+  }
 }
 
 void read_scroll_of_healing_hands() {
@@ -329,11 +351,11 @@ FunctionMap function_map[] = {
     {"bear trap", "tool", 0, use_bear_trap},
 
     // Scrolls
-    {"scroll of fireball", "scroll", 0, read_scroll_of_fireball},
-    {"scroll of ice storm", "scroll", 0, read_scroll_of_ice_storm},
-    {"scroll of fire storm", "scroll", 0, read_scroll_of_fire_storm},
-    {"scroll of lightning bolt", "scroll", 0, read_scroll_of_lightning_bolt},
-    {"scroll of healing hands", "scroll", 0, read_scroll_of_healing_hands},
+    {"scroll of fireball", "scroll", 30, read_scroll_of_fireball},
+    {"scroll of ice storm", "scroll", 30, read_scroll_of_ice_storm},
+    {"scroll of fire storm", "scroll", 30, read_scroll_of_fire_storm},
+    {"scroll of lightning bolt", "scroll", 30, read_scroll_of_lightning_bolt},
+    {"scroll of healing hands", "scroll", 15, read_scroll_of_healing_hands},
     {"scroll of detect life", "scroll", 0, read_scroll_of_detect_life},
 
     // Quest Items
