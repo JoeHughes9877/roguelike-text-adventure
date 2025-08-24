@@ -2,7 +2,6 @@
 #include "../include/entity.h"
 #include "../include/room.h"
 #include "../include/utils.h"
-#include "../include/vector.h"
 #include <sqlite3.h>
 #include <stddef.h>
 #include <stdio.h>

@@ -1,7 +1,6 @@
 #include "../include/inventory.h"
 #include "../include/database.h"
 #include "../include/room.h"
-#include "../include/vector.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
